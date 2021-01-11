@@ -1,6 +1,5 @@
 #include <stdio.h>
 
-
 // 19124-CM-111 Vedhanth
 void swap(int *a, int* b)
 {
@@ -38,7 +37,7 @@ int pivot_adjuster(int array[], int first, int last)
 
     // returning the placement of the pivot
     return i + 1;
-
+    
 }
 
 int QuickSort(int array[], int first, int last)
@@ -49,7 +48,6 @@ int QuickSort(int array[], int first, int last)
     {
         return 0;
     }
-
 
     int pivot = pivot_adjuster(array, first, last);
 
