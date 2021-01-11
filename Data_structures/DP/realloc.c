@@ -4,6 +4,9 @@
 void main()
 
 {
+    
+    int n = 10;
+    
     // allocating memory using calloc
     pointer = (int*) calloc(n, sizeof(int));
 
@@ -46,8 +49,6 @@ void main()
             printf("%d\n",*(pointer + i));
 
     }
-    
 
-    
     
 }
