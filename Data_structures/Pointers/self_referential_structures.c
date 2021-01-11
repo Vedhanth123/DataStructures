@@ -10,8 +10,14 @@ void main()
         struct player *structure_pointer;
     }p1,p2;
 
+    // inserting values into two structures
     p1.age = 10;
     p2.age = 20;
 
     p1.structure_pointer = &p2;
+    
+    printf("%d\n",p1.age);
+    
+    // printing the structure variable using the pointer in the first variable
+    printf("%d\n",p1.structure_pointer->age);
 }
