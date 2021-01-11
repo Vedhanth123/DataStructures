@@ -1,0 +1,69 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+void main()
+{
+    // 1) add the elements in two diagonals
+    // 2) take the absolute difference of both.
+
+
+// left to right = {0,0} {1,1} {2,2}
+
+// right to left = {0,2} {1,1} {2,0}
+
+                // {1, 2, 3},
+                // {4, 5, 6},
+                // {9, 8, 9}
+
+    int matrix[3][3] = { 
+                   {1, 2, 3},
+                   {4, 5, 6},
+                   {9, 8, 9} };
+
+    // 1) add the diagonals
+
+    // left to right
+    int x_axis = 0;
+    int y_axis = 0;
+
+    // for(int i = 0; i < 3; i++)
+    // {
+    //     printf("%d\n",matrix[x_axis][y_axis]);
+    //     x_axis ++;
+    //     y_axis ++;
+    // }
+
+    // right to left
+    int x_axis_R = 0;
+    int y_axis_R = 2;
+
+    // for(int i = 0; i < 3; i++)
+    // {
+    //     printf("%d\n",matrix[x_axis_R][y_axis_R]);
+    //     x_axis_R ++;
+    //     y_axis_R --;
+    // }
+
+    int add_left = 0, add_right = 0;
+
+    // adding elements in left to right diagonal
+    for(int i = 0; i < 3; i ++)
+    {
+        add_left += matrix[x_axis][y_axis];
+        x_axis += 1;
+        y_axis += 1;
+    }
+
+    // adding all the elements in right to left diagonal
+    for(int i = 0; i < 3; i ++)
+    {
+        add_right += matrix[x_axis_R][y_axis_R];
+        x_axis_R += 1;
+        y_axis_R -= 1;
+    }
+
+    // taking the absolute difference of both the diagonals and printing
+    // it simultaneously
+    printf("%d",abs(add_right-add_left));
+
+}
