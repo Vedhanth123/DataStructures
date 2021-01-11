@@ -4,7 +4,10 @@
 void main()
 {
 
-// allocating memory using calloc
+    // allocating memory using calloc
+    
+    int n = 8;
+    
     pointer = (int*) calloc(n, sizeof(int));
 
     if(pointer == NULL)
