@@ -30,6 +30,8 @@ void main()
             printf("%d\n",*(pointer + i));
 
     }
+    
+}
 
     // allocating memory using calloc
     pointer = (int*) calloc(n, sizeof(int));
