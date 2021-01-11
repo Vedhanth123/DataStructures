@@ -10,7 +10,7 @@ void main()
     }s1;
 
     // initializing address of struct into a pointer
-    // struct sports_player *pointer = &s1;
+    struct sports_player *pointer = &s1;
 
     // reading elements into a structure using pointer
     scanf("%i",&pointer->age);
