@@ -8,7 +8,7 @@ void main()
     int n = 10;
     
     // allocating memory using calloc
-    pointer = (int*) calloc(n, sizeof(int));
+    int *pointer = (int*) calloc(n, sizeof(int));
 
     if(pointer == NULL)
         printf("Memory not allocated: \n");
