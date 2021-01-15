@@ -22,7 +22,6 @@ void main()
 
     int index_of_smallest_value = 0;
 
-    int temp;
 
     // 0) start from the second place of the array
     for(int i = 1; i < 10; i ++ )
