@@ -1,0 +1,25 @@
+Communication and Life Skills:
+
+1) write the tipes of listening
+2) Write yourself introduction 
+    1) informal = name, family, hobbies, likes/dislikes
+    2) formal = name, education, qualification, skills, hobbies
+3) Descripte about your home, college [physical description
+4) Write about your memorable incident of your life
+5) Write the characteristics which you like in your parents and family members
+6) Write about any great leader
+
+Data Structures:
+
+1) Binary Search
+2) Linear Search
+3) Bubble sort
+4) Insertion sort
+5) Selection sort
+6) Merge sort
+7) Quick sort
+8) Stack (using arrays)
+9) Queues (using arrays)
+10) Single Linked List
+11) Double Linked list
+12) Circular linked list
