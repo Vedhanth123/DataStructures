@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <conio.h>
 
 int swap(int *a, int* b)
 {
@@ -39,5 +40,7 @@ void main()
     {
         printf("%d\n",array[i]);
     }
+    
+    getch();
     
 }
