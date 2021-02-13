@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <conio.h>
+
 
 // 1,2,3,4,5
 
@@ -43,11 +45,18 @@ int binary_search(int *array, int key, int front, int last)
 
 }
 
-int main()
+void main()
 {
 
-    for(int i = 0; i < 5; i++)
-
-        printf("%d, ",binary_search(array, array[i], 0, 5-1));
+    int i;
+    
+    // asking user element to be searched
+    int key;
+    printf("Enter the element to be searched:\n");
+    scanf("%d", &key);
+    
+    printf("%d",binary_search(array, key, 0, 5-1));
+    
+    getch();
 
 }
