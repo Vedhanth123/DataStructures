@@ -11,15 +11,16 @@ Communication and Life Skills:
 
 Data Structures:
 
-1) Binary Search
-2) Linear Search
-3) Bubble sort
-4) Insertion sort
-5) Selection sort
-6) Merge sort
-7) Quick sort
-8) Stack (using arrays)
-9) Queues (using arrays)
-10) Single Linked List
-11) Double Linked list
-12) Circular linked list
+1) Binary Search [done]
+2) Linear Search [done]
+3) Bubble sort [done]
+4) Insertion sort [done]
+5) Selection sort [done]
+6) Merge sort [done]
+7) Quick sort [done]
+8) Stack (using arrays) [done]
+9) Queues (using arrays) [done]
+10) Single Linked List [done]
+11) Double Linked list [done]
+12) Circular linked list [done]
+
