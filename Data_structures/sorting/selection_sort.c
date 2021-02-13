@@ -1,6 +1,7 @@
 // c program to implement selection sort.
 
 # include <stdio.h>
+# include <conio.h>
 
 // algo:    swap the smallest element in the array to the first.
 
@@ -45,4 +46,6 @@ void main()
     {
         printf("%d\n",array[i]);
     }
+    
+    getch();
 }
