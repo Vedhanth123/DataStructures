@@ -1,6 +1,8 @@
 #include <stdio.h>
+#include <conio.h>
 
-// 19124-CM-111 Vedhanth
+
+
 void swap(int *a, int* b)
 {
     int temp = *a;
@@ -78,6 +80,6 @@ int main()
         printf("%d\n",array[i]);
     }
 
-    return 0;
+    getch();
 
 }
