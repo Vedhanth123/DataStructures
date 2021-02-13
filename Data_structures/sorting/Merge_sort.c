@@ -1,4 +1,5 @@
 #include<stdio.h>
+#include <conio.h>
 
 int Merge(int array[], int left, int mid, int right)
 {
@@ -85,4 +86,6 @@ void main()
 
     for(int i = 0; i < 6; i++)
         printf("%d\n",array[i]);
+    
+    getch();
 }
