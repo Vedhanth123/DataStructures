@@ -148,11 +148,8 @@ void main()
     for(i = 0; i < 5; i ++)
         insert();
 
-    for(int i = 0; i < 5; i++)
-    {
-        insert(i * 10);
-    }   
-        delete(2);
+   
+    delete(2);
 
     printf("found at %d",search(30));
     
