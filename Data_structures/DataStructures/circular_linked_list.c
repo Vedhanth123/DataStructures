@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <conio.h>
+
 
 // circular linked list
 
@@ -61,4 +63,6 @@ void main()
     
     for(i = 0; i < 5; i ++)
         insert();
+    
+    getch();
 }
