@@ -65,12 +65,11 @@ void travese()
 
 void main()
 {
-    int data = 10;
-
+    int i;
+    
     for(int i = 0 ; i < 5; i++)
     {
-        insert(data);
-        data += 10;
+        insert();
     }
 
     travese();
