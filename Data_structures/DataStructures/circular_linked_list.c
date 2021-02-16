@@ -1,79 +1,64 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <conio.h>
 
-
-// double linked list creation
+// circular linked list
 
 struct node
 {
     int data;
-    struct node *p1;
-    struct node *p2;
+    struct node *link;
 };
 
 typedef struct node node;
 
-// dummy headers
 node *first = NULL;
 node *last;
 node *new_node;
-node *previous = NULL;
+
+int counter;
 
 void insert()
 {
-    // allocation of memory
-    new_node = (node*) malloc(sizeof(node));
-
-    // asking user for data
+    
     int data;
-    printf("Enter data :\n");
+    printf("Enter data into nodes:\n");
     scanf("%d",&data);
+    
+    new_node  = (node*) malloc(sizeof(node));
 
     new_node->data = data;
-
-    new_node->p2 = NULL;
-
-    new_node->p1 = previous;
 
     if(first == NULL)
     {
         first = new_node;
+        new_node->link = new_node;
     }
     else
     {
-        last->p2 = new_node;
+        last->link = new_node;
     }
-
     last = new_node;
-    previous = new_node;
+    last->link = first;
+
+    counter ++;
 
 }
 
-void travese()
+void display()
 {
+    node *temp;
 
-    struct node *temp;
-
-    temp = first;
-
-    while(temp != NULL)
+    for(int i = 0; i < counter; i++)
     {
         printf("%d\n",temp->data);
-        temp = temp->p2;
+        temp = temp->link;
     }
-
 }
 
 void main()
 {
+    int i;
     
-    for(int i = 0 ; i < 5; i++)
-    {
+    for(i = 0; i < 5; i ++)
         insert();
-    }
-
-    travese();
-
-    getch();
 }
