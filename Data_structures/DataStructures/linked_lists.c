@@ -156,4 +156,6 @@ void main()
     traverse();
 
     replace(30,70);
+    
+    getch();
 }
