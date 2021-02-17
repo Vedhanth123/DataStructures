@@ -1,3 +1,5 @@
+// NOT TO BE WRITTEN IN RECORD
+
 #include <stdio.h>
 #include <stdlib.h>
 
