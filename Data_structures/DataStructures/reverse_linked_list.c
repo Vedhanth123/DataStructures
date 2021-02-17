@@ -159,5 +159,5 @@ void main()
         insert(i * 10);
     }
 
-    reverse
+    reverse();
 }
