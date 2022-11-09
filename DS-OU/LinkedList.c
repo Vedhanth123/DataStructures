@@ -16,17 +16,19 @@ struct LinkedList
 struct LinkedList *head = NULL;
 struct LinkedList *node;
 
+void CreateNewNode(int data)
+{
+
+    node = (struct LinkedList *)malloc(sizeof(struct LinkedList));
+    if (head == NULL)
+    {
+        head = node;
+    }
+}
+
 int main()
 {
     // write a function to create a new Node
-    void CreateNewNode(int data) {
-
-        node = (struct LinkedList*) malloc(struct LinkedList);
-        if(head == NULL) {
-            head = node;
-        }
-    } 
 
     CreateNewNode(10);
-
 }
