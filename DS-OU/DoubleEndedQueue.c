@@ -38,7 +38,7 @@ void delete_front()
         {
             del_front = -1;
         }
-        print("%d", Queue[del_front]);
+        printf("%d", Queue[del_front]);
         Queue[del_front] = 0;
     }
 }
@@ -71,9 +71,10 @@ void delete_rear()
         del_rear--;
         if (del_rear == -1)
         {
-            printf("%d", Queue[del_rear]);
-            Queue[del_front] = 0;
+            del_rear = 10;
         }
+        printf("%d", Queue[del_rear]);
+        Queue[del_rear] = 0;
     }
 }
 
@@ -81,4 +82,6 @@ int main()
 {
     insert_rear(100);
     insert_front(200);
+    delete_front();
+    delete_rear();
 }
