@@ -2,13 +2,14 @@
 
 # include <stdio.h>
 
+struct player
+{
+    int age;
+    struct player *structure_pointer;
+}p1,p2;
+
 void main()
 {
-    struct player
-    {
-        int age;
-        struct player *structure_pointer;
-    }p1,p2;
 
     // inserting values into two structures
     p1.age = 10;
@@ -18,6 +19,5 @@ void main()
     
     printf("%d\n",p1.age);
     
-    // printing the structure variable using the pointer in the first variable
     printf("%d\n",p1.structure_pointer->age);
 }

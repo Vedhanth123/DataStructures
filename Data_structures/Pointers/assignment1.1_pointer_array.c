@@ -13,7 +13,7 @@ void main()
     // accessing elements of array using pointer
     for(int i = 0; i < 5; i++)
     {
-        printf("%d value,%d value,%u address\n",*(pointer+i),pointer[i], pointer);
+        printf("%d",pointer[i]);
     }
     
     // 19124-CM-111 Vedhanth

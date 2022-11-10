@@ -13,7 +13,6 @@ void main()
     // traverse array of pointers
     for (i = 0; i < 5; i++)
     {
-        
         printf("%s,\n",*(p+i));
     }   
 }

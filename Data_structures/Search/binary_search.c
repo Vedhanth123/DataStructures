@@ -4,6 +4,8 @@
 
 // 1,2,3,4,5
 
+// algorithm on binary search
+
 // 1) search for the number 4
 
 // 2) pickup the center element of the array as key
@@ -51,10 +53,7 @@ void main()
     int i;
     
     // asking user element to be searched
-    int key;
-    printf("Enter the element to be searched:\n");
-    scanf("%d", &key);
-    
+
     printf("%d",binary_search(array, key, 0, 5-1));
     
     getch();

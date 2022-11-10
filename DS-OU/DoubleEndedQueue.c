@@ -1,11 +1,17 @@
 #include <stdio.h>
 
+
 int Queue[10];
 
 int ins_rear = 0;
 int ins_front = 9;
 int del_front = -1;
 int del_rear = 10;
+
+/*
+[,,,,,,,10] //
+*/
+
 
 void insert_rear(int data)
 {
