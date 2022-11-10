@@ -16,7 +16,7 @@ int del_rear = 10;
 void insert_rear(int data)
 {
     // check if ins_rear anddel_front is same
-    if (ins_rear == del_front)
+    if (ins_rear == ins_front+1)
     {
         printf("Queue is full\n");
     }
@@ -33,7 +33,7 @@ void insert_rear(int data)
 
 void delete_front()
 {
-    if (del_front == ins_rear)
+    if (del_front > 9 || del_front+1 == del_rear)
     {
         printf("Queue is empty:\n");
     }
@@ -51,7 +51,7 @@ void delete_front()
 
 void insert_front(int data)
 {
-    if (ins_front == (ins_rear - 1))
+    if (ins_rear-1 == ins_front)
     {
         printf("Queue is full\n");
     }
@@ -68,7 +68,7 @@ void insert_front(int data)
 
 void delete_rear()
 {
-    if (del_rear == ins_front)
+    if (del_rear < 0 || del_rear == del_front-1)
     {
         printf("Queue is empty");
     }
@@ -86,8 +86,20 @@ void delete_rear()
 
 int main()
 {
-    insert_rear(100);
-    insert_front(200);
+  for(int i = 1;i <= 6; i++)
+  {
+    insert_front(i*10);
+  }
+  for(int i = 1;i <= 7; i++)
+  {
+    insert_rear(i*100);
+  }
+  for(int i = 1; i <= 6; i ++)
+  {
     delete_front();
+  }
+  for(int i = 1; i <= 7; i++)
+  {
     delete_rear();
+  }
 }
