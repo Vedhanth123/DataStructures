@@ -17,6 +17,7 @@ struct node
     }
 };
 
+// Traversing Trees in preorder
 void preorder(struct node *tree)
 {
     if (tree != NULL)
@@ -26,6 +27,8 @@ void preorder(struct node *tree)
         preorder(tree->right);
     }
 }
+
+// Traversing Trees in inorder
 void inorder(struct node *tree)
 {
     if (tree != NULL)
@@ -35,6 +38,8 @@ void inorder(struct node *tree)
         inorder(tree->right);
     }
 }
+
+// Traversing Trees in postorder
 void postorder(struct node *tree)
 {
     if (tree != NULL)
