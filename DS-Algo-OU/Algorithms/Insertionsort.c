@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 // create a list
-int array[5]{5, 4, 3, 2, 1};
+int array[5] = {5, 4, 3, 2, 1};
 
 // insertion sort:
 // 1) start from the 1st element of the array
