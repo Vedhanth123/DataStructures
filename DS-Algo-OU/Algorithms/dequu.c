@@ -13,7 +13,7 @@ int array[5] = {0, 0, 0, 0, 0};
 int insert_from_rear = -1;
 void InsertFromRear(int data)
 {
-    if (insert_from_rear < 5 || (insert_from_rear == insert_from_front-1))
+    if (insert_from_rear < 5 || (insert_from_rear == insert_from_front - 1))
     {
         // 2) increment index
         insert_from_rear += 1;
@@ -34,10 +34,9 @@ void InsertFromRear(int data)
 // 3) delete data
 // 4) stop at last
 int delete_from_rear = -1;
-
 void DeleteFromRear()
 {
-    if (delete_from_rear < 5 || (delete_from_rear == delete_from_front-1))
+    if (delete_from_rear < 5 || (delete_from_rear == delete_from_front - 1))
     {
         // 2) increment index
         delete_from_rear += 1;
@@ -89,13 +88,33 @@ void DeleteFromFront()
 }
 int main()
 {
-  // ------------------------------ 1) ---------------------------
-  // 1) insert half from rear
-  // 2) try to check for overflow of insert from front
-  
-  // ------------------------------ 2) ---------------------------
-  // 1) insert half from front
-  // 2) try to check for overflow of insert from rear
-  
+    // ------------------------------ 1) ---------------------------
+    // 1) insert half from rear
+    // 2) try to check for overflow of insert from front
+
+    // ------------------------------ 2) ---------------------------
+    // 1) insert half from front
+    // 2) try to check for overflow of insert from rear
+    printf("1 for insert from rear:\n2 for insert from front:\n3 for delete from rear:\n4 for delete from front:\n5Exit");
+    int choice = 0;
+    int value;
+    switch (choice)
+    {
+        case 1:
+            scanf("%d",&value);
+            InsertFromRear(value);
+        case 2:
+            scanf("%d",&value);
+            InsertFromFront(value);
+        case 3:
+            scanf("%d",&value);
+            InsertFromRear(value);
+        case 4:
+            scanf("%d",&value);
+            InsertFromFront(value);
+        case 5:
+            scanf("%d",&value);
+            exit(0);
+    }
   
 }

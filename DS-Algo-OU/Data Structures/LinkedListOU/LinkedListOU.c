@@ -8,12 +8,10 @@ struct node
     struct node *link;
 };
 
-int count = 0;
-
 // create headers for the linked list
 struct node *first = NULL, *last, *n1;
 
-// function to insert values into nodes
+// function to insert values into nodes from the last
 void insert()
 {
     // allocating memory for the nodes
@@ -38,60 +36,45 @@ void insert()
         last->link = n1;
     }
     last = n1;
-
-    // keeping track of no. of nodes by incrementing the counter
-    count++;
 }
 void randominsert(int data, int index)
 {
-    // create a pointer which create a new node
-    struct node *dummypointer = (struct node *)malloc(sizeof(struct node));
+    // create a node
+    struct node *temp = (struct node *)malloc(sizeof(struct node));
+    temp->data = data;
 
-    // insert data into it
-    dummypointer->data = data;
+    // creating an iterator
+    int i = 0;
 
-    // creating a counter variable which keeps track of index of the linked list
-    int count = 1;
-
+    // create a node for traversing the linked list
     struct node *traverser = first;
-    struct node *prev = first;
 
-    // traverse till till the index
-    while (traverser != NULL && count != index)
+    while (i < index - 1 && traverser != NULL)
     {
-        if (index != 1)
-        {
-            prev = prev->link;
-        }
-
         traverser = traverser->link;
-        count++;
+        i++;
     }
 
-    // address of current element must be given to the newly created node
-    dummypointer->link = prev->link;
-    prev->link = dummypointer;
+    temp->link = traverser->link;
+    traverser->link = temp;
 }
 
 void randomdelete(int index)
 {
     // create two pointers
-    struct node *traverser = first, *prev = first;
-    int count = 1;
+    struct node *traverser = first, *temp;
+    ;
+    int i = 0;
 
-    while (traverser != NULL && count != index)
+    while (i < index - 1 && traverser != NULL)
     {
-        if (index != 1)
-        {
-            prev = prev->link;
-        }
-
         traverser = traverser->link;
-        count++;
+        i++;
     }
 
-    prev->link = traverser->link;
-    free(traverser);
+    temp = traverser->link;
+    traverser->link = temp->link;
+    free(temp);
 }
 
 void traverse()
@@ -197,4 +180,3 @@ void main()
 
     traverse();
 }
-
