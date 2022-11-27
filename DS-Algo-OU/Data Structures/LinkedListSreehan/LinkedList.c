@@ -24,19 +24,19 @@
 
 
 
-struct node
+struct Node
 {
     int data;
-    struct node *pointer;
+    struct Node *pointer;
 };
 
-struct node *head = NULL, *newnode = NULL, *linker = NULL;
+struct Node *head = NULL, *newnode = NULL, *linker = NULL;
 
 
 void insert(int data)
 {
     // allocate memory
-    newnode = (struct node*) malloc(sizeof(struct node*));
+    newnode = (struct Node*) malloc(sizeof(struct Node*));
 
     // inserting data into node
     newnode->data = data; // machine code : *(newnode).data;
@@ -61,7 +61,7 @@ void insert(int data)
 void randominsert(int data, int index)
 {
     // create memory for the data
-    struct Node *t = (struct node*) malloc(sizeof(struct Node));
+    struct Node *t = (struct Node*) malloc(sizeof(struct Node));
 
     // insert data into the node
     t->data = data;
@@ -87,9 +87,9 @@ void randominsert(int data, int index)
     temp->pointer = t; // 2)
 }
 
-void deleteinsert(int index)
+void randomdelete(int index)
 {
-    struct node *t = head;
+    struct Node *t = head;
 
     int i = 0;
 
@@ -100,7 +100,7 @@ void deleteinsert(int index)
         i ++;
     }
 
-    struct node *temp;
+    struct Node *temp;
 
     temp = t->pointer; // temp will point to 2
     t->pointer = temp->pointer; // storing 3's address in 1's pointer
@@ -115,4 +115,6 @@ void main()
     }
 
     randominsert(100, 2);
+
+    randomdelete(3);
 }
