@@ -110,13 +110,45 @@ void search(int key)
     // same logic of display but with small change
 }
 
-void randominsert(int key)
+void randomdelete(int index)
 {
+    struct Node *t = head;
+
+    int i = 0;
+
+    while((i < index - 1) && (t != NULL))
+    {
+        // going to next node -> just like i++ in for loop 
+        t = t->pointer;
+        i ++;
+    }
+
+    struct Node *temp;
+
+    temp = t->pointer; // temp will point to 2
+    t->pointer = temp->pointer; // storing 3's address in 1's pointer
+    free(temp); // deleting temp
 
 }
 
-void randomdelete(int key)
+void deleteinsert(int index)
 {
+    struct Node *t = head;
+
+    int i = 0;
+
+    while((i < index - 1) && (t != NULL))
+    {
+        // going to next node -> just like i++ in for loop 
+        t = t->pointer;
+        i ++;
+    }
+
+    struct Node *temp;
+
+    temp = t->pointer; // temp will point to 2
+    t->pointer = temp->pointer; // storing 3's address in 1's pointer
+    free(temp); // deleting temp
 
 }
 

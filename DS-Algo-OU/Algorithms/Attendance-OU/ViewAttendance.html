@@ -23,21 +23,23 @@
 			<table class="table">
 				<thead>
 					<tr>
-						{% for x in range(len(Data[0])) %} {% if x == 0 %}
-						<th scope="col">RollNo</th>
-						{% else %}
-						<th scope="col">Date</th>
-						{% endif %} {% endfor %}
+						{% for x in range(len) %}
+						    {% if x == 0 %}
+						        <th scope="col">RollNo</th>
+						    {% else %}
+						        <th scope="col">Date</th>
+						    {% endif %}
+					    {% endfor %}
 					</tr>
 				</thead>
 				<tbody>
-					{% for x in Data %} 
-					<tr>
-                        {% for y in x %}
-						<td>y</td>
-                        % endfor %}
-					</tr>
-					{% endfor %} {
+					{% for x in Data %}
+                        <tr>
+                            {% for y in x %}
+					    	    <td>{{ y }}</td>
+                            {% endfor %}
+					    </tr>
+					{% endfor %}
 				</tbody>
 			</table>
 		</div>
