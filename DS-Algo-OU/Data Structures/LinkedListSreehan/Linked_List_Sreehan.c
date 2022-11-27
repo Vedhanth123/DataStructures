@@ -131,25 +131,33 @@ void randomdelete(int index)
 
 }
 
-void deleteinsert(int index)
+void randominsert(int data, int index)
 {
-    struct Node *t = head;
+    // create memory for the data
+    struct Node *t = (struct Node*) malloc(sizeof(struct Node));
 
+    // insert data into the node
+    t->data = data;
+
+    // NULL value to node
+    t->pointer = NULL;
+
+    // This points to the first node in the linked list
+    struct Node *temp = head;
+
+    // This is same as i in for loop
     int i = 0;
 
-    while((i < index - 1) && (t != NULL))
+    while((i < index - 1) && (temp != NULL))
     {
         // going to next node -> just like i++ in for loop 
-        t = t->pointer;
+        temp = temp->pointer;
         i ++;
     }
 
-    struct Node *temp;
-
-    temp = t->pointer; // temp will point to 2
-    t->pointer = temp->pointer; // storing 3's address in 1's pointer
-    free(temp); // deleting temp
-
+    
+    t->pointer = temp->pointer; // 1) 
+    temp->pointer = t; // 2)
 }
 
 void main()
