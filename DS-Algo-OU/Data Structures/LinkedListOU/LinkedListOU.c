@@ -63,7 +63,6 @@ void randomdelete(int index)
 {
     // create two pointers
     struct node *traverser = first, *temp;
-    ;
     int i = 0;
 
     while (i < index - 1 && traverser != NULL)
@@ -90,35 +89,6 @@ void traverse()
     }
 }
 
-// function to delete specific element from the list
-void delete (int index)
-{
-    // ALGO:
-
-    // 1) traverse through linked list and reach the position you want to delete
-    // deleting nodes from the linked list
-    struct node *temp, *previous, *post;
-
-    previous = first;
-
-    for (int i = 0; i < index - 1; i++)
-    {
-        previous = previous->link;
-    }
-
-    // 2) delete the node in that particular place
-    temp = previous->link;
-
-    post = temp->link;
-
-    free(temp);
-
-    // 3) re link the previous node to the next node
-    previous->link = post;
-
-    // keeping track of no. of nodes by decrementing the counter
-    count--;
-}
 
 // function to search the linked list
 int search(int key)
@@ -128,8 +98,7 @@ int search(int key)
     temp = first;
 
     int found = 0, i;
-
-    for (i = 0; i < count; i++)
+    while(temp != NULL)
     {
         if (temp->data == key)
         {
@@ -154,7 +123,7 @@ void replace(int key, int replace)
 
     int i;
 
-    for (i = 0; i < count; i++)
+    while(temp != NULL)
     {
         if (temp->data == key)
         {
@@ -170,13 +139,28 @@ void main()
 
     int i;
 
+    printf("Inserting data into node\n");
     for (i = 0; i < 5; i++)
         insert();
 
+    printf("Printing the linked List\n");
     traverse();
 
-    randominsert(4, 2);
-    randomdelete(5);
+    printf("Enter data to insert the node at random index\n");
+    int data;
+    scanf("%d",&data);
+    printf("Enter your random insert value\n");
+    int index;
+    scanf("%d",&index);
+    
+    randominsert(data, index);
 
+    printf("Deleting data randomly from the linked list\n");
+    printf("Enter index in which you want to delete data at\n");
+    scanf("%d", &index);
+
+    randomdelete(index);
+
+    printf("printing the linked list\n");
     traverse();
 }
