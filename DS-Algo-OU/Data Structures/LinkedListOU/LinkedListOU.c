@@ -8,19 +8,16 @@ struct node
     struct node *link;
 };
 
+typedef struct node node;
+
 // create headers for the linked list
 struct node *first = NULL, *last, *n1;
 
 // function to insert values into nodes from the last
-void insert()
+void insert(int data)
 {
     // allocating memory for the nodes
     n1 = (struct node *)malloc(sizeof(struct node));
-
-    // asking user to enter data into nodes
-    int data;
-    printf("Enter data into node:\n");
-    scanf("%d", &data);
 
     // inserting data into nodes
     n1->data = data;
@@ -59,6 +56,51 @@ void randominsert(int data, int index)
     traverser->link = temp;
 }
 
+// function to insert node before front
+void insertfront(int data)
+{
+    // creating a node and inserting data into the node
+    struct node *temp = (struct node *)malloc(sizeof(struct node));
+    temp->data = data;
+
+    // checking if first is empty
+    if (first == NULL)
+    {
+        // if first is empty then assign newly created node to the first pointer
+        first = temp;
+        temp->link = NULL;
+    }
+    else
+    {
+        // linking new created node to first
+        temp->link = first;
+
+        // reassiging newly created node as first
+        first = temp;
+    }
+}
+
+// Create a function to reverse a linked list
+void reverse()
+{
+    // 1) point to the last node of the linked list
+    // 2) Take the link of the last node and point it to the last node
+
+    // Take two pointers one points to the last node
+    // Another one points to the node just before the last one
+    node *last = first, *just_before_last = NULL, *temp;
+
+    while (last)
+    {
+
+        temp = last->link;
+        last->link = just_before_last;
+
+        just_before_last = last;
+        last = temp;
+    }
+}
+
 void randomdelete(int index)
 {
     // create two pointers
@@ -89,7 +131,6 @@ void traverse()
     }
 }
 
-
 // function to search the linked list
 int search(int key)
 {
@@ -98,7 +139,7 @@ int search(int key)
     temp = first;
 
     int found = 0, i;
-    while(temp != NULL)
+    while (temp != NULL)
     {
         if (temp->data == key)
         {
@@ -123,7 +164,7 @@ void replace(int key, int replace)
 
     int i;
 
-    while(temp != NULL)
+    while (temp != NULL)
     {
         if (temp->data == key)
         {
@@ -140,27 +181,6 @@ void main()
     int i;
 
     printf("Inserting data into node\n");
-    for (i = 0; i < 5; i++)
-        insert();
-
-    printf("Printing the linked List\n");
-    traverse();
-
-    printf("Enter data to insert the node at random index\n");
-    int data;
-    scanf("%d",&data);
-    printf("Enter your random insert value\n");
-    int index;
-    scanf("%d",&index);
-    
-    randominsert(data, index);
-
-    printf("Deleting data randomly from the linked list\n");
-    printf("Enter index in which you want to delete data at\n");
-    scanf("%d", &index);
-
-    randomdelete(index);
-
-    printf("printing the linked list\n");
-    traverse();
+    for (i = 1; i <= 5; i++)
+        insert(i * 10);
 }
