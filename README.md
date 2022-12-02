@@ -1,2 +1,2 @@
-# plutonium
+# Data Structures and Algorithms
 Data structures
