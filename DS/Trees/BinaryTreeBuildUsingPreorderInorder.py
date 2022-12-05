@@ -1,5 +1,3 @@
-# Tree program
-
 
 class BinaryTree:
 
@@ -81,20 +79,7 @@ class BinaryTree:
         return node
         
 
-if __name__ == '__main__':
 
-    # creating a tree
-    obj = BinaryTree(1)
-    obj.left = BinaryTree(2)
-    obj.right = BinaryTree(3)
-    obj.left.left = BinaryTree(4)
-    obj.left.right = BinaryTree(5)
-    obj.right.left = BinaryTree(6)
-    obj.right.right = BinaryTree(7)
+node = BinaryTree.preorder_build("12435", "42153", 0, 4, 0)
 
-    print('---------------- Preorder --------------------')
-    obj.preorder(obj)
-    print('\n---------------- Inorder --------------------')
-    obj.inorder(obj)
-    print('\n---------------- Postorder --------------------')
-    obj.postorder(obj)
+

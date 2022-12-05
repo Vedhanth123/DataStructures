@@ -1,55 +1,120 @@
-#include <stdio.h>
-#include <stdlib.h>
-
-// create a struct
-struct node
-{
+#include<stdio.h>
+#include<stdlib.h>
+struct node {
     int data;
     struct node *link;
-};
-
-// creating nick name for the struct node as node
-typedef struct node node;
-
-node *r = NULL;
-
-// creating function to create memory using structure
-node *getNode()
-{
-    // creating a temporary variable to allocate memory
-    node *temp = (node *)malloc(sizeof(node));
-    temp->link = NULL;
+}*head=NULL;
+struct node *getnode(){
+    struct node *temp =(struct node*)malloc(sizeof(struct node));
     return temp;
 }
-
-// creating a function insert node at start
-void ins(node *s, int data)
-{
-    // allocating node
-    node *temp = getNode();
-
-    // adding data to node
-    temp->data = data;
-
-    // linking with another node
-    s->link = temp;
-}
-
-// function to create a node and assigning 
-void create_node(int data)
-{
-    node *temp = getNode();
-    temp->data = data;
-
-    if (r == NULL)
+void insrt(int x){
+    struct node *t=head;
+    t = getnode();
+    t->data=x;
+    if(head==NULL)
     {
-        r = temp;
+        t->link=NULL;
+        head=t;
+    }
+    else
+    {
+        t->link=head;
+        head=t;
     }
 }
-
-void main()
+void ine(int y){
+    struct node *t= head;
+    t=getnode();
+    t->data=y;
+    t->link = NULL;
+    if (head==NULL)
+    {
+        t->link=NULL;
+        head=t;
+    }
+    else
+    {
+        struct node *temp =head;
+        while(temp->link)
+        {
+            temp=temp->link;
+        }
+        temp->link=t;
+    }
+}
+void inb(int z,int a)
 {
-    int a = 1000;
-    create_node(0);
-    ins(r, a);
+    struct node *t= head;
+    t=getnode();
+    t->data=z;
+    if(head==NULL)
+    {
+        t->link=NULL;
+        head=t;
+    }
+    else{
+    struct node *temp=head;
+    while(temp->data!=a)
+    {
+        temp=temp->link;
+    }
+    t->link=temp->link;
+    temp->link=t;
+     }
+}
+void display(){
+     if(head==NULL)
+     printf("List is empty");
+     else{
+          struct node *temp=head;
+          printf("\nList elements are: ");
+          while(temp){
+               printf("%d\t",temp->data);
+               temp=temp->link;
+          }
+     }
+}
+int count(struct node *t){
+    if(t)
+        return 1 + count(t->link);
+}
+int cunt(struct node *t){
+    int count =0;
+    while(t){
+          t=t->link;
+          count=count+1;
+     }
+     return count;
+}
+void swap(int *x,int *y){
+    int temp;
+        temp=*x;
+        *x=*y;
+        *y=temp;
+}    
+int arrenge(struct node *t){
+    struct node *u;
+    int temp;
+     while(t){
+        u = head;
+           while(u->link){
+                  if (u->data>u->link->data){
+                printf("Error is over here\n");
+                swap(&(u->data), &(u->link->data));
+                }
+            u = u->link;
+            }
+        t = t->link;
+        }
+      return (t->data);
+}
+
+int main(){
+  ine(600);
+  ine(500);
+  ine(400);
+  ine(300);
+  arrenge(head);
+  display();
 }

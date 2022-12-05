@@ -68,34 +68,39 @@ void inorder_traversal(node *tree)
     }
 }
 
-node *buildTree(int *preorder, int *inorder, int inorder_start, int inorder_end)
+node* buildTree(int preorder[], int inorder[], int start, int end)
 {
-    // This is a variable which is used as an index for preorder and we don't want it to change everytime to new number after we recurse the function so we have used static keyword.
+    // point to elements of the preorder array
     static int idx = 0;
 
-    // create node for every element in preorder array
-    int curr = preorder[idx];
-
-    // incrementing the index
-    idx++;
-
-    if (inorder_start > inorder_end)
+    // check if the inorder array is empty
+    if(start > end)
     {
+        // if empty return NULL
         return NULL;
     }
 
-    node *n1 = new node(curr);
-    if (inorder_start == inorder_end)
+    // Creating a node after pointing to the element in preorder array
+    node *n1 = new node(preorder[idx]);
+
+    // incrementing index
+    idx++;
+
+
+    if(start == end)
     {
         return n1;
     }
 
-    int pos = search(inorder, inorder_start, inorder_end, curr);
+    // getting the position of the element in inorder array
+    int pos = search(inorder, start, end, preorder[idx]);
 
-    n1->left = buildTree(preorder, inorder, inorder_start, pos - 1);
-    n1->right = buildTree(preorder, inorder, pos + 1, inorder_end);
+    // Splitting the inorder array into two parts, buildTree for left and buildTree for right
+    n1->left = buildTree(preorder, inorder, start, pos - 1);
+    n1->right = buildTree(preorder, inorder, pos + 1, end);
 
-    return n1;
+    // return the node
+    return n1; 
 }
 
 int main()
