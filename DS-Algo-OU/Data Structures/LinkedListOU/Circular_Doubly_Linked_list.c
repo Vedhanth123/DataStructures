@@ -23,7 +23,7 @@ void insert_at_end(int data)
     if(head == NULL)
     {
         head = n1;
-        n1->left = NULL;
+        n1->left = head;
     }
     else
     {
@@ -44,10 +44,22 @@ void insert_at_head(int data)
     // inserting data into the node
     n1->data = data;
 
+    // checking if head is null
+    if(head == NULL)
+    {
+        head = n1;
+        n1->left = head;
+        n1->right = head;
+        return 0;
+    }
+
+
     n1->right = head;
     n1->left = last;
 
     head->left = n1;
+    last->right = n1;
+
     head = n1;
 }
 
@@ -67,6 +79,13 @@ void insert_at_random(int data, int index)
     // inserting data into the node
     n1->data = data;
 
+    if(head == NULL)
+    {
+        head = n1;
+        n1->left = head;
+        n1->right = head;
+        return 0;
+    }
 
     // creating a pointer to traverse to that location
     struct node *traverser = head;

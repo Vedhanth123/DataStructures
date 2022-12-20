@@ -98,6 +98,13 @@ void insert_at_random(int data, int index)
 
 }
 
+void reverse()
+{
+    struct node *temp = head;
+
+    while(temp)
+}
+
 void main()
 {
     for(int i = 1; i <= 2; i ++)

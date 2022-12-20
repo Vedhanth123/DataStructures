@@ -1,5 +1,4 @@
 #include<stdio.h>
-#include <conio.h>
 
 int Merge(int array[], int left, int mid, int right)
 {
@@ -7,7 +6,8 @@ int Merge(int array[], int left, int mid, int right)
     int tl = mid - left + 1, tr = right - mid;
 
     // creating two temp arrays to store the values 
-    int left_temp[tl], right_temp[tr];
+    int *left_temp = (int*) malloc(sizeof(int)*tl);
+    int *right_temp = (int*) malloc(sizeof(int)*tr);
 
     // copying elements from array to temp arrays
     for(int i = 0; i < tl; i ++)
@@ -80,12 +80,11 @@ int Merge_sort(int array[], int left, int right)
 
 void main()
 {
-    int array[6] = {5,4,3,2,1,0};
+    int array[5] = {5,4,3,2,1};
 
-    Merge_sort(array, 0, 5);
+    Merge_sort(array, 0, 4);
 
-    for(int i = 0; i < 6; i++)
+    for(int i = 0; i < 5; i++)
         printf("%d\n",array[i]);
-    
-    getch();
+
 }
