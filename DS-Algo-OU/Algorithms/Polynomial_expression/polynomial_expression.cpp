@@ -84,7 +84,7 @@ int coefficient_checker(string term, struct Polynomial *p)
 {
     p->coefficient = 0;
     // if there are no coefficients in the term
-    if(term[0] == 'x')
+    if('a' <= term[0] <= 'z')
     {
         p->coefficient = 1;
         p->powerx = power_checker(term);
@@ -94,7 +94,7 @@ int coefficient_checker(string term, struct Polynomial *p)
     {
         // p->coefficient = ((int)term[0] - 48);
         int i = 0;
-        while(term[i] != 'x' && term[i] != '\0')
+        while('a' <= term[i] <= 'z' && term[i] != '\0')
         {
             p->coefficient = (p->coefficient * 10) + ((int)term[i] - 48);
             i += 1;
@@ -191,7 +191,7 @@ void display_linked_list()
 }
 int main()
 {
-    char polynomial_expression[] = "20x^200+2x+2+3x^9+2+1+6x+9x+x^3+2+x+0" ;
+    char polynomial_expression[] = "20x^200+2y+2+3x^9+2+1+6x+9x+x^3+2+x+0" ;
     divide_expression(polynomial_expression);
     display_linked_list();
     return 1;
