@@ -22,7 +22,7 @@ struct BTnode *buildTree(int preorder[], int inorder[], int left_inroder, int ri
     {
         return NULL;
     }
-    if (left_inroder >= right_inorder)
+    if (left_inroder > right_inorder)
     {
         return NULL;
     }
