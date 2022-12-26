@@ -105,7 +105,7 @@ struct BT* delete_child(struct BT* t, int data)
             // 2) Move right
             struct BT *right = t->right;
 
-            // 3) Find the smallest element in the right subtree and move it to the smallest element in the right subtree4
+            // 3) Find the smallest element in the right subtree
             struct BT *s1 = smallest_element(right);
 
             // 4) insert the left child of the node [which is to be deleted] to the smallest element's left pointer in the right subtree.
@@ -115,10 +115,14 @@ struct BT* delete_child(struct BT* t, int data)
             struct BT *le = largest_element(s1);
 
             // 5) insert the right child of the node [which is to be deleted] to the le's right pointer
-            le->right = t->right
+            le->right = t->right;
 
             // 6) delete the node
+            
+            // 7) printing the node to be deleted.
             free(t);
+
+            return s1;
         }
     }
     if(data <= t->data)

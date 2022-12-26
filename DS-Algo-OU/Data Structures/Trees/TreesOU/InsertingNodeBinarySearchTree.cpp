@@ -27,24 +27,38 @@ struct BT* insert(struct BT *t, int data, struct BT* newnode)
     {
         newnode = getNode(data);
     }
+    if(!root)
+    {
+        root = newnode;
+    }
     if(!t)
     {
-        t = newnode;
+        return newnode;
     }
     else if(data <= t->data)
     {
-        return insert(t->left, data, newnode);
+        t->left = insert(t->left, data, newnode);
     }
     else
     {
-        return insert(t->right, data, newnode);
+        t->right = insert(t->right, data, newnode);
     }
-
+    return t;
 }
 
 int main()
 {
-    struct BT* root;
-    root = insert(root, 100, NULL);
+    int i = 100;
+    while(i > 0)
+    {
+      insert(root, i, NULL);
+      i -= 25;
+    }
+    i = 100;
+    while(i < 200)
+    {
+      i += 25;
+      insert(root, i, NULL);
+    }
     
 }
