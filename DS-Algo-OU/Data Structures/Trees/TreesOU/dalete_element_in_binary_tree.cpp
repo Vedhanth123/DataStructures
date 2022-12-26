@@ -136,28 +136,33 @@ struct BT* delete_child(struct BT* t, int data)
 
 }
 
+struct BT* insert(struct BT *t, int data, struct BT* newnode)
+{
+    // if node is not created
+    if(!newnode)
+    {
+        newnode = getNode(data);
+    }
+    // if the 
+    if(!t)
+    {
+        t = newnode;
+    }
+    else if(data <= t->data)
+    {
+        return insert(t->left, data, newnode);
+    }
+    else
+    {
+        return insert(t->right, data, newnode);
+    }
+
+}
+
 int main()
 {
-    
-    root = new BT;
-    root->data = 100;
+    struct BT *root = NULL;
+    root = insert(root, 60, NULL);
 
-    root->left = new BT;
-    root->left->data = 75;
-
-    root->right = new BT;
-    root->right->data = 125;
-
-    root->left->left = new BT;
-    root->left->left->data = 60;
-    root->left->right->data = 80;
-
-    root->right->left = new BT;
-    root->right->left->data = 115;
-    root->right->right->data = 130;
-
-    delete_child(root, 130);
-    delete_child(root, 125);
-    delete_child(root, 75);
-
+    return 1;
 }
