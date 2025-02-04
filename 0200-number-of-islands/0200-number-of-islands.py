@@ -7,24 +7,25 @@ class Solution:
         # return the counter
 
         islands = 0
-        def dfs(row, col, grid):
 
-            if(0 <= row < len(grid) and 0 <= col < len(grid[0]) and grid[row][col] == '1'):
-
-                grid[row][col] = '0'
-                dfs(row+1,col, grid)
-                dfs(row-1,col, grid)
-                dfs(row,col+1, grid)
-                dfs(row,col-1, grid)
+        queue = deque([])
+        directions = [(0,1),(0,-1),(1,0),(-1,0)]
 
         for x in range(len(grid)):
 
             for y in range(len(grid[0])):
 
                 if(grid[x][y] == '1'):
-                    dfs(x,y,grid)
+                    queue.append((x,y))
                     islands += 1
+                    while(queue):
 
+                        curr = queue.popleft()
+                        for r,c in directions:
+                            
+                            if(0 <= curr[0]+r < len(grid) and 0 <= curr[1]+c < len(grid[0]) and grid[curr[0]+r][curr[1]+c] == '1'):
+                                queue.append((curr[0]+r, curr[1]+c))
+                                grid[curr[0]+r][curr[1]+c] = '0'
         
         return islands
                             
