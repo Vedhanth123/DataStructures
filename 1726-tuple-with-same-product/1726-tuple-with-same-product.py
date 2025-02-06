@@ -1,21 +1,19 @@
 class Solution:
     def tupleSameProduct(self, nums: List[int]) -> int:
         
-        freq = defaultdict(list)
-        answer = 0
+        product_cnt = defaultdict(int)
+        pair_cnt = defaultdict(int)
 
         for x in range(len(nums)):
+            for y in range(x+1,len(nums)):
 
-            for y in range(x+1, len(nums)):
+                pair_cnt[nums[x] * nums[y]] += product_cnt[nums[x] * nums[y]]
 
-                freq[nums[x] * nums[y]].append([nums[x],nums[y]])
+                product_cnt[nums[x] * nums[y]] += 1
         
 
-        for key,val in freq.items():
-
-            if(len(val) > 1):
-                answer += 8
+        res = 0
+        for key, val in pair_cnt.items():
+            res += 8 * val
         
-        return answer
-
-            
+        return res
