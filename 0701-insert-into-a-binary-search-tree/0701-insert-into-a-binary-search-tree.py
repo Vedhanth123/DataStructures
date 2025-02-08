@@ -15,6 +15,8 @@ class Solution:
                     root.left = insert(root.left,val)
                 if(val > root.val):
                     root.right = insert(root.right, val)
+                
+                return root
 
             else:
 
