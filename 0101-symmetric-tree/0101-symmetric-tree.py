@@ -21,7 +21,7 @@ class Solution:
 
                     if(curr == None):
                         level.append(None)
-                        break
+                        continue
 
                     level.append(curr.val)
                     if(curr.left):
