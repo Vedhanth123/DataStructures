@@ -22,6 +22,7 @@ class Solution:
                 if(rec(root.right,targetSum, total+root.val) == True):
                     return True
 
+                return False
             else:
                 return False
         
