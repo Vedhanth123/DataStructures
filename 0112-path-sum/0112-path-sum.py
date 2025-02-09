@@ -7,22 +7,20 @@
 class Solution:
     def hasPathSum(self, root: Optional[TreeNode], targetSum: int) -> bool:
         
+    
+        def dfs(root, target, total):
         
-        if(root):
-            def dfs(root, target, total):
-            
-                if(root):
+            if(root):
 
-                    if(not root.left and not root.right):
-                        if(target == total+root.val):
-                            return True
-                        else:
-                            return False
+                if(not root.left and not root.right):
+                    if(target == total+root.val):
+                        return True
+                    else:
+                        return False
 
-                    return dfs(root.left, target, total+root.val) or dfs(root.right,target, total+root.val)
-                else:
-                    return False
+                return dfs(root.left, target, total+root.val) or dfs(root.right,target, total+root.val)
+            else:
+                return False
                     
-            return dfs(root, targetSum, 0)
+        return dfs(root, targetSum, 0)
         
-        return False
