@@ -7,22 +7,12 @@
 class Solution:
     def maxDepth(self, root: Optional[TreeNode]) -> int:
 
-        answer = 0
-        if(root):
+        def dfs(root, height):
 
-            queue = deque([root])
-
-            while(queue):
-
-                for x in range(len(queue)):
-                    curr = queue.popleft()
-
-                    if(curr.left):
-                        queue.append(curr.left)
-                    if(curr.right):
-                        queue.append(curr.right)
-                
-                answer += 1
-            
-        return answer
-
+            if(root):
+                return 1 + max(dfs(root.left,height), dfs(root.right,height))
+            else:
+                return 0
+        
+        return dfs(root,0)
+        
