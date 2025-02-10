@@ -10,7 +10,7 @@ class Solution:
         answer = 0
         if(root):
 
-            queue = deque[root]
+            queue = deque([root])
 
             while(queue):
 
@@ -24,5 +24,5 @@ class Solution:
                 
                 answer += 1
             
-            return answer
+        return answer
 
