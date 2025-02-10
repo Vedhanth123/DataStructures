@@ -10,12 +10,19 @@ class Solution:
         answer = 0
         if(root):
 
-            def dfs(root,height):
-                if(root):
-                    return 1 + max(dfs(root.left,height),dfs(root.right,height))
-                else:
-                    return 0
+            queue = deque[root]
 
-            answer = dfs(root,0)
-        
-        return answer
+            while(queue):
+
+                for x in range(len(queue)):
+                    curr = queue.popleft()
+
+                    if(curr.left):
+                        queue.append(curr.left)
+                    if(curr.right):
+                        queue.append(curr.right)
+                
+                answer += 1
+            
+            return answer
+
