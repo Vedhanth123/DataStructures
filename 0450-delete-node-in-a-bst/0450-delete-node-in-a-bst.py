@@ -5,41 +5,41 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-
-    def smallestVal(self, root):
-
-        while(root.left):
-            root = root.left
-        else:
-            return root
-    
-    def largestVal(self,root):
-        if(root.right):
-            return self.largestVal(root.right)
-        else:
-            return root
-
-
     def deleteNode(self, root: Optional[TreeNode], key: int) -> Optional[TreeNode]:
         
-        if(root):
-
-            if(root.val == key):
-                if(not root.left and not root.right):
-                    return None
-                elif(not root.left and root.right):
-                    return root.right
-                elif(root.left and not root.right):
-                    return root.left
-                else:
-                    smallest = self.smallestVal(root.right)
-                    smallest.right = self.deleteNode(root.right, smallest.val)
-                    smallest.left = root.left
-                    return smallest
+        def find_min(root):
             
-            else:
-                if(key < root.val):
-                    root.left = self.deleteNode(root.left,key)
-                else:
-                    root.right = self.deleteNode(root.right,key)
+            while(root and root.left):
+                root = root.left
             return root
+                
+        def delete(root,key):
+
+            if(root):
+
+                if(key == root.val): 
+                    # if the node is left
+                    if(not root.left and not root.right):
+                        return None
+                    elif(root.left and not root.right):
+                        return root.left
+                    elif(root.right and not root.left):
+                        return root.right
+                    else:
+
+                        mini = find_min(root.right)
+                        mini.right = delete(root.right, mini.val)
+                        mini.left = root.left
+                        return mini
+                
+                else:
+                    if(key < root.val):
+                        root.left = delete(root.left, key)
+                    if(key > root.val):
+                        root.right = delete(root.right, key)
+                return root
+                        
+
+                    
+        
+        return delete(root, key)
