@@ -12,34 +12,31 @@ class Solution:
             while(root and root.left):
                 root = root.left
             return root
-                
+
         def delete(root,key):
 
             if(root):
 
-                if(key == root.val): 
-                    # if the node is left
+                if(key == root.val):
+
                     if(not root.left and not root.right):
                         return None
+                    elif(not root.left and root.right):
+                        return root.right
                     elif(root.left and not root.right):
                         return root.left
-                    elif(root.right and not root.left):
-                        return root.right
                     else:
 
                         mini = find_min(root.right)
                         mini.right = delete(root.right, mini.val)
                         mini.left = root.left
                         return mini
-                
                 else:
                     if(key < root.val):
-                        root.left = delete(root.left, key)
+                        root.left = delete(root.left,key)
                     if(key > root.val):
-                        root.right = delete(root.right, key)
-                return root
-                        
+                        root.right = delete(root.right,key)
+                
+            return root
 
-                    
-        
-        return delete(root, key)
+        return delete(root,key)
