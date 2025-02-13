@@ -11,7 +11,7 @@ class Solution:
         # return recursion(n)
 
         # def memoization
-        mem = [1,1] + [0] * (n-2)
+        mem = [1,1] + [-1] * (n-1)
         def rec2(n):
 
             if(mem[n] != -1):
@@ -20,5 +20,6 @@ class Solution:
                 mem[n] = rec2(n-1) + rec2(n-2)
                 return mem[n]
     
-        return rec2(n)
+        rec2(n)
+        return mem[n]
             
