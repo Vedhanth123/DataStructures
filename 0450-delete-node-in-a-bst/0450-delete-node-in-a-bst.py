@@ -6,37 +6,43 @@
 #         self.right = right
 class Solution:
     def deleteNode(self, root: Optional[TreeNode], key: int) -> Optional[TreeNode]:
-        
-        # delete a node in the binary search tree
+
+
+        # lc-max
+        # rc-min
 
         def find_min(root):
             while(root and root.left):
                 root = root.left
+            
             return root
-    
-        def delete(root,val):
+
+        def delete(root, key):
 
             if(root):
 
-                if(val == root.val):
+                if(key == root.val):
 
-                    if(not root.left and not root.right):
+                    # 1) no children or leaf
+                    if(root.left == None and root.right == None):
                         return None
-                    elif(root.left and not root.right):
+                    elif(root.left != None and root.right == None):
                         return root.left
-                    elif(not root.left and root.right):
+                    elif(root.left == None and root.right != None):
                         return root.right
                     else:
-                        small = find_min(root.right)
-                        small.right = delete(root.right,small.val)
-                        small.left = root.left
-                        return small
-                else:
+                        mi = find_min(root.right)
+                        mi.right = delete(root.right, mi.val)
+                        mi.left = root.left
+                        return mi
+                    
+                
+                if(key < root.val):
+                    root.left = delete(root.left , key)
 
-                    if(val < root.val):
-                        root.left = delete(root.left, val)
-                    else:
-                        root.right = delete(root.right,val)
+                if(key > root.val):
+                    root.right = delete(root.right, key)
+
             return root
         
-        return delete(root,key)
+        return delete(root, key)
