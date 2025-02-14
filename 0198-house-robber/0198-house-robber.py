@@ -1,24 +1,21 @@
 class Solution:
     def rob(self, nums: List[int]) -> int:
         
-        dp={}
-        def dfs(index,sum_):
+        mem = [-1] * (len(nums)+1) 
 
+        def solve(nums, index):
             if(index >= len(nums)):
-                return sum_
+                return 0
             
-            if (index,sum_) in dp:
-                return dp[(index,sum_)]
-            
+            if(mem[index] != -1):
+                return mem[index]
 
-            skip = dfs(index+1,sum_)
+            steal = nums[index] + solve(nums,index+2)
+            skip = solve(nums,index+1)
 
-            include=dfs(index+2,sum_+nums[index])
+            mem[index] = max(steal,skip)
+            return mem[index]
 
-            dp[(index,sum_)]=max(skip,include)
+        return solve(nums,0)
 
-            return dp[(index,sum_)]
-    
-        return dfs(0,0)
-
- 
+                
