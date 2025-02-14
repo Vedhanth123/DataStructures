@@ -35,7 +35,7 @@ class Solution:
 
                     if(val < root.val):
                         root.left = delete(root.left, val)
-                    if(val > root.val):
+                    else:
                         root.right = delete(root.right,val)
             return root
         
