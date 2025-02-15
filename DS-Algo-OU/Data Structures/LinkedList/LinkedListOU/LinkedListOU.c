@@ -180,7 +180,10 @@ void main()
 
     int i;
 
-    printf("Inserting data into node\n");
-    for (i = 1; i <= 5; i++)
-        insert(i * 10);
+    insert(10);
+    insertfront(200);
+    randominsert(150,1);
+    insert(50);
+    insert(60);
+    randomdelete(2);
 }

@@ -1,8 +1,14 @@
-#include <iostream>
-using namespace std;
+#include <stdio.h>
 
 // 1) sort the adjacent elements of the array if the left element is greater than the right element
 // 2) keep on sorting the elements till the array is sorted
+
+void swap(int *a, int *b)
+{
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
 void bubblesort(int array[], int len)
 {
     for (int i = 0; i < len; i++)
@@ -11,7 +17,7 @@ void bubblesort(int array[], int len)
         {
             if (array[j] > array[j + 1])
             {
-                swap(array[j], array[j + 1]);
+                swap(&array[j], &array[j + 1]);
             }
         }
     }
@@ -25,7 +31,7 @@ int main()
 
     for(int i = 0; i < 5; i++)
     {
-        cout << array[i];
+        printf("%d ",array[i]);
     }
     return 0;
 }

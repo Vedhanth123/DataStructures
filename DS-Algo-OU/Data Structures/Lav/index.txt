@@ -1,0 +1,7 @@
+1) Stacks --> completed
+2) Queues --> completed
+3) Postfix evaluation
+4) infix to Postfix
+5) Linked List
+6) Trees
+7) Graphs

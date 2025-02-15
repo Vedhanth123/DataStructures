@@ -10,8 +10,8 @@ struct node
 }; 
 
 // pointer to store first node of the linked list
-struct node *head;
-struct node *prev;
+struct node *head = NULL;
+struct node *prev = NULL;
 
 // function to add nodes at last
 void *insert_at_end(int data)
@@ -36,7 +36,6 @@ void *insert_at_end(int data)
         n1->left = prev;
     }
     prev = n1;
-
 }
 
 // function to add a node at head
@@ -62,7 +61,7 @@ void insert_at_random(int data, int index)
     if(index == 0)
     {
         insert_at_head(data);
-        return 0;
+        return;
     }
     
     // create a node
@@ -98,25 +97,65 @@ void insert_at_random(int data, int index)
 
 }
 
-void reverse()
+void traverse()
 {
     struct node *temp = head;
+    while(temp != NULL)
+    {
+        printf("%d ", temp->data);
+        temp = temp->right;
+    }
+    printf("\n");
+}
+// function to delete the node from end
+void delete_from_end()
+{
+    struct node *temp = prev;
+    prev = prev->left;
+    prev->right = NULL;
+    free(temp);
+}
 
-    while(temp)
+void delete_from_start()
+{
+    struct node *temp = head;
+    head = head->right;
+    head->left = NULL;
+    free(temp);
+}
+
+void random_delete(int index)
+{
+    struct node *t = head;
+    int c= 0;
+    struct node *l = t->right->right;
+    while(t != NULL && c != index && l != NULL)
+    {
+        t = t->right;
+        l = l->right;
+        c ++;
+    }
+    l->left->left = t;
+    free(t->right);
+    t->right = l;
 }
 
 void main()
 {
-    for(int i = 1; i <= 2; i ++)
-    {
-        insert_at_end((i*10));
-    }
-    for(int i = 1; i <= 2; i ++)
-    {
-        insert_at_random((i * 100), 0);
-    }
-    for(int i = 1; i <= 2; i ++)
-    {
-        insert_at_random((i * 1000), 3);
-    }
+    insert_at_end(100);
+    traverse();
+    insert_at_end(200);
+    traverse();
+    insert_at_end(300);
+    traverse();
+    insert_at_head(50);
+    traverse();
+    insert_at_random(150, 1);
+    traverse();
+    delete_from_end();
+    traverse();
+    delete_from_start();
+    traverse();
+    random_delete(2);
+    traverse();
 }

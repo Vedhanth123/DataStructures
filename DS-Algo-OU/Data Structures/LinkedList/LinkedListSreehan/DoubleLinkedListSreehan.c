@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 struct Dnode
 {
@@ -53,6 +54,7 @@ void insert_at_start(int data)
 
     }
     newnode->left = NULL;
+    head = newnode;
 }
 
 // function to insert nodes in between / randomly
@@ -91,7 +93,7 @@ void delete_from_start()
     free(temp);
 }
 
-void randome_delete(int index)
+void random_delete(int index)
 {
     struct Dnode *t = head;
     int c= 0;
@@ -108,19 +110,6 @@ void randome_delete(int index)
 }
 
 // search
-void search(int key)
-{
-    struct Dnode *temp = head;
-    while(temp != NULL)
-    {
-        if(temp->data == key)
-        {
-            printf("Found ");
-            break;
-        }
-        temp = temp->right;
-    }
-}
 
 void traverse()
 {
@@ -129,10 +118,26 @@ void traverse()
     {
         printf("%d",temp->data);
         temp = temp->right;
-        
     }
 }
 int main()
 {
+    
+    insert_at_end(10);
+    traverse();
+    insert_at_start(200);
+    traverse();
+    insert_random(150,1);
+    traverse();
+    insert_at_end(50);
+    traverse();
+    insert_at_end(60);
+    traverse();
+    random_delete(2);
+    traverse();
+    delete_from_end();
+    traverse();
+    delete_from_start();
+    traverse();
     return 0;
 }

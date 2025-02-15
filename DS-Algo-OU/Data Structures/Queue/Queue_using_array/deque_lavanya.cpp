@@ -1,5 +1,5 @@
-#include <iostream>
-using namespace std;
+#include <stdio.h>
+#include <stdlib.h>
 
 
 int array[5] = {0, 0, 0, 0, 0};
@@ -83,7 +83,6 @@ int main()
         printf("2 for insert from rear\n");
         printf("3 for delete from front\n");
         printf("4 for delete from rear\n");
-        cin >> choice;
 
         if(choice == 1)
         {
