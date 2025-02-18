@@ -1,38 +1,38 @@
 class Solution:
     def solve(self, board: List[List[str]]) -> None:
-        if not board or not board[0]:
-            return
+        """
+        Do not return anything, modify board in-place instead.
+        """
         
-        rows, cols = len(board), len(board[0])
-        
-        def dfs(r, c):
-            if r < 0 or r >= rows or c < 0 or c >= cols or board[r][c] != 'O':
-                return
-            board[r][c] = '#'  # Mark as safe
-            for dr, dc in [(1, 0), (-1, 0), (0, 1), (0, -1)]:  # Explore 4 directions
-                dfs(r + dr, c + dc)
-        
-        # Step 1: Mark border-connected 'O's
-        for r in range(rows):
-            if board[r][0] == 'O':
-                dfs(r, 0)
-            if board[r][cols - 1] == 'O':
-                dfs(r, cols - 1)
-        
-        for c in range(cols):
-            if board[0][c] == 'O':
-                dfs(0, c)
-            if board[rows - 1][c] == 'O':
-                dfs(rows - 1, c)
+        # BFS function to mark safe border-connected 'O's
+        def bfs(r, c):
+            queue = deque([(r, c)])
+            while queue:
+                x, y = queue.popleft()
+                if 0 <= x < len(board) and 0 <= y < len(board[0]) and board[x][y] == 'O':
+                    board[x][y] = 'T'  # Temporarily mark safe cells
+                    for dx, dy in [(1,0),(-1,0),(0,1),(0,-1)]:
+                        queue.append((x+dx, y+dy))
 
-
-        for x in range(rows):
-            for y in range(cols):
-
+        for x in (0,len(board)-1):
+            for y in range(len(board[0])):
                 if(board[x][y] == 'O'):
+                    bfs(x,y)
+        
+        for x in range(len(board)):
+            for y in (0,len(board[0])-1):
+                if(board[x][y] == 'O'):
+                    bfs(x,y,)
+        
+        print(board)
+        for x in range(len(board)):
+            for y in range(len(board[0])):
+                if(board[x][y]== 'O'):
                     board[x][y] = 'X'
-                if(board[x][y] == '#'):
-                    board[x][y] = 'O'
-        
-        
+                elif(board[x][y] == 'T'):
+                    board[x][y] == 'O'
+    
+
+
+
             
