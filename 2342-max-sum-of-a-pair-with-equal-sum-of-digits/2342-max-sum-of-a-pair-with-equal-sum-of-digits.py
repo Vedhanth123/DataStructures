@@ -1,31 +1,31 @@
 class Solution:
     def maximumSum(self, nums: List[int]) -> int:
-        
-        sum_of_digits = defaultdict(list)
 
+        max_sum = -1
+        sum_of_digits = {}
         for x in range(len(nums)):
 
-            digit_sum = 0
             temp = nums[x]
+            digit_sum = 0
             while(temp):
-                digit_sum += temp%10
+                digit_sum += temp % 10
                 temp //= 10
             
-            if(len(sum_of_digits[digit_sum]) == 2):
-                if(min(sum_of_digits[digit_sum]) < nums[x]):
-                    sum_of_digits[digit_sum].remove(min(sum_of_digits[digit_sum]))
-                    sum_of_digits[digit_sum].append(nums[x])
+            if(digit_sum in sum_of_digits):
+                heapq.heappush(sum_of_digits[digit_sum], -nums[x])
             else:
-                sum_of_digits[digit_sum].append(nums[x])
+                sum_of_digits[digit_sum] = [-nums[x]]
         
-        max_sum = -1
-
+        
         for key, val in sum_of_digits.items():
 
-            if(len(val) == 2):
-                max_sum = max(max_sum, sum(val))
+            if(len(val) >= 2):
+                n1 = -heapq.heappop(val)
+                n2 = -heapq.heappop(val)
+                max_sum = max(max_sum, n1+n2)
         
         return max_sum
-            
+                
 
+            
         
