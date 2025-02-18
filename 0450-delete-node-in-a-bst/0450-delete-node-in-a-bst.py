@@ -6,43 +6,37 @@
 #         self.right = right
 class Solution:
     def deleteNode(self, root: Optional[TreeNode], key: int) -> Optional[TreeNode]:
-
-
-        # lc-max
-        # rc-min
-
+        
         def find_min(root):
             while(root and root.left):
                 root = root.left
-            
             return root
 
+        # first search for the val
         def delete(root, key):
-
+            
             if(root):
 
-                if(key == root.val):
+                if(root.val == key):
 
-                    # 1) no children or leaf
-                    if(root.left == None and root.right == None):
+                    if(not root.left and not root.right):
                         return None
-                    elif(root.left != None and root.right == None):
+                    elif(root.left and not root.right):
                         return root.left
-                    elif(root.left == None and root.right != None):
+                    elif(not root.left and root.right):
                         return root.right
                     else:
-                        mi = find_min(root.right)
-                        mi.right = delete(root.right, mi.val)
-                        mi.left = root.left
-                        return mi
-                    
-                
-                if(key < root.val):
-                    root.left = delete(root.left , key)
 
-                if(key > root.val):
+                        mini = find_min(root.right)
+                        mini.right = delete(root.right,mini.val)
+                        mini.left = root.left
+                        return mini
+                
+                elif(key < root.val):
+                    root.left = delete(root.left, key)
+                else:
                     root.right = delete(root.right, key)
 
             return root
-        
-        return delete(root, key)
+
+        return delete(root,key)
