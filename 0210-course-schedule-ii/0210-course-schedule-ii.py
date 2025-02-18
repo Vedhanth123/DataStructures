@@ -1,37 +1,34 @@
 class Solution:
     def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
         
+        visited = []
+
         adj = defaultdict(list)
-        indegree = {i:0 for i in range(numCourses)}
+        indegree = [0 for _ in range(numCourses)]
 
-        for dest,src in prerequisites:
-
+        for dest, src in prerequisites:
             adj[src].append(dest)
             indegree[dest] += 1
         
-        courses_left = numCourses
-        order_of_courses = []
-
         queue = deque([])
 
-        for key,val in indegree.items():
-            if(val == 0):
-                queue.append(key)
+        for node in range(len(indegree)):
+
+            if(indegree[node] == 0):
+                queue.append(node)
         
         while(queue):
 
-            for x in range(len(queue)):
-                curr = queue.popleft()
-                order_of_courses.append(curr)
-                courses_left -= 1
+            curr = queue.popleft()
+            visited.append(curr)
+            for neigh in adj[curr]:
+                indegree[neigh] -= 1
+                if(indegree[neigh] == 0):
+                    queue.append(neigh)
 
-                for neighbours in adj[curr]:
-
-                    indegree[neighbours] -= 1
-                    if(indegree[neighbours] == 0):
-                        queue.append(neighbours)
         
-        if(courses_left == 0):
-            return order_of_courses
-        else:
+        if(len(visited) != numCourses):
             return []
+        else:
+            return visited
+        
