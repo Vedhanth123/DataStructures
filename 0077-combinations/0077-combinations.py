@@ -1,20 +1,17 @@
 class Solution:
     def combine(self, n: int, k: int) -> List[List[int]]:
         
-        combs = []
+        answer = []
 
-        def backtracker(n, k, sub, index):
+        def rec(i,combs):
 
-            if(len(sub) == k):
-                combs.append(sub.copy())
-                return
-            if(index > n):
-                return
+            if(len(combs) == k):
+                answer.append(combs.copy())
             
-            sub.append(index)
-            backtracker(n,k,sub,index+1)
-            sub.pop()
-            backtracker(n,k,sub,index+1)
-    
-        backtracker(n,k,[],1)
-        return combs
+            for j in range(i, n+1):
+                combs.append(j)
+                rec(j+1, combs)
+                combs.pop()
+        
+        rec(1,[])
+        return answer
