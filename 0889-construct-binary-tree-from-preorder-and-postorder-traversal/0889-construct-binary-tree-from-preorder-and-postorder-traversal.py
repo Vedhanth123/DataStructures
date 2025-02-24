@@ -1,19 +1,31 @@
-
-
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
 class Solution:
     def constructFromPrePost(self, preorder: List[int], postorder: List[int]) -> Optional[TreeNode]:
-        if not preorder or not postorder:
-            return None
         
-        root = TreeNode(preorder[0])  # First element of preorder is the root
-        if len(preorder) == 1:  
-            return root  # If only one element, return as root
-        
-        left_root_val = preorder[1]  # Left child is the next in preorder
-        left_subtree_size = postorder.index(left_root_val) + 1  # Size of left subtree
+        def build(preorder, postorder, root):
 
-        # Construct left and right subtrees
-        root.left = self.constructFromPrePost(preorder[1:left_subtree_size+1], postorder[:left_subtree_size])
-        root.right = self.constructFromPrePost(preorder[left_subtree_size+1:], postorder[left_subtree_size:-1])
+            if(len(preorder) < 1 and len(postorder) < 1):
+                return None
+            
+            
+            root = TreeNode(preorder[0])
+            if(len(preorder) == 1):
+                return root
+
+            left_val = preorder[1]
+            left_size = postorder.index(left_val) + 1
+
+            root.left = build(preorder[1:left_size+1], postorder[:left_size], root.left)
+            root.right = build(preorder[left_size+1:], postorder[left_size:-1], root.right)
+
+            return root
         
-        return root
+        return build(preorder, postorder, None)
+
+
+
