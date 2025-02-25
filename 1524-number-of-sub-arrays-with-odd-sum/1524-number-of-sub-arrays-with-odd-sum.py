@@ -1,26 +1,24 @@
 class Solution:
     def numOfSubarrays(self, arr: List[int]) -> int:
-    
-        res = 0
 
-        def dfs(index, summer):
+        # prefix_sum of [0] -> this is even andhuke so even eppudu 1 ah vuntadhi
 
-            if(index == len(arr)):
-                if(summer % 2 == 1):
-                    return 1
-                else:
-                    return 0
-            
-            count = 0
-            if(summer % 2 == 1):
-                count = 1
-            
-            count += dfs(index+1, summer + arr[index])
-            return count
+        prefix_sum = [arr[0]] * len(arr)
 
-
-        for x in range(len(arr)):
-
-            res += dfs(x, 0)
+        for x in range(1,len(arr)):
+            prefix_sum[x] = prefix_sum[x-1] + arr[x] 
         
-        return res
+        result = 0
+        even_count = 1
+        odd_count = 0
+
+        for x in range(len(prefix_sum)):
+
+            if(prefix_sum[x]%2 ==0):
+                result=(result+odd_count) % (10**9 + 7)
+                even_count+=1
+            else:
+                result=(result+even_count) % (10**9 + 7)
+                odd_count+=1
+        
+        return result
