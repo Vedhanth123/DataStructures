@@ -15,10 +15,10 @@ class Solution:
         for x in range(len(prefix_sum)):
 
             if(prefix_sum[x]%2 ==0):
-                result=(result+odd_count) % (10**9 + 7)
+                result=(result+odd_count)
                 even_count+=1
             else:
-                result=(result+even_count) % (10**9 + 7)
+                result=(result+even_count)
                 odd_count+=1
         
-        return result
+        return result % (10**9 + 7)
