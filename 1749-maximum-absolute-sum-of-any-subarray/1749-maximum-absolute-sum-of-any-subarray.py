@@ -1,22 +1,23 @@
 class Solution:
-
     def maxAbsoluteSum(self, nums: List[int]) -> int:
         
-        def dfs(index, sum_, answer):
+        min_prefix_sum = float('inf')
+        max_prefix_sum = float('-inf')
 
-            if(index == len(nums)):
-                answer = max(answer, abs(sum_))
-                return answer
-            
-            answer = max(answer, abs(sum_+nums[index]))
-            answer = max(answer, dfs(index+1, sum_+nums[index], answer))
-            
-            return answer
-                
-                
-        res = 0
+        prefix_sum = 0
+        max_abs_sum = 0
+        
         for x in range(len(nums)):
 
-            res = max(res, dfs(x, 0, res))
+            prefix_sum += nums[x]
+
+            min_prefix_sum = min(min_prefix_sum, prefix_sum)
+            max_prefix_sum = max(max_prefix_sum, prefix_sum)
+
+            if(prefix_sum >= 0):
+                max_abs_sum = max(max_abs_sum , max(prefix_sum, prefix_sum - min_prefix_sum))
+            elif(prefix_sum <= 0):
+                max_abs_sum = max(max_abs_sum, max(abs(prefix_sum), abs(prefix_sum - max_prefix_sum)))
         
-        return res
+        return max_abs_sum
+
