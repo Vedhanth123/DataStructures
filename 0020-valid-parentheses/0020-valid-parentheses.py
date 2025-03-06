@@ -1,44 +1,42 @@
 class Solution:
     def isValid(self, s: str) -> bool:
         
+        open_brackets = ['(','{','[']
+
         stack = []
 
         for x in range(len(s)):
 
-            if(s[x] == '(' or s[x] == '[' or s[x] == '{'):
+            if(s[x] in open_brackets):
                 stack.append(s[x])
-
-            if(s[x] == ')'):
-
-                if(len(stack) == 0):
-                    return False
-                elif(stack[-1] != '('):
-                    return False
-                else:
-                    stack.pop()
-                
-            elif(s[x] == ']'):
-
-                if(len(stack) == 0):
-                    return False
-                elif(stack[-1] != '['):
-                    return False
-                else:
-                    stack.pop()
-
-
-            elif(s[x] == '}'):
-
-                if(len(stack) == 0):
-                    return False
-                elif(stack[-1] != '{'):
-                    return False
-                else:
-                    stack.pop()
+        
             else:
-                pass
-                
-        if(len(stack) == 0):
-            return True
-        else:
-            return False
+                if(s[x] == ')'):
+                    if(len(stack) and stack[-1] != '(' ):
+                        return False
+                    else:
+                        if(len(stack)):
+                            stack.pop()
+                        else:
+                            return False
+
+                if(s[x] == '}'):
+                    if(len(stack) and stack[-1] != '{' ):
+                        return False
+                    else:
+                        if(len(stack)):
+                            stack.pop()
+                        else:
+                            return False
+                            
+                if(s[x] == ']'):
+                    if(len(stack) and stack[-1] != '[' ):
+                        return False
+                    else:
+                        if(len(stack)):
+                            stack.pop()
+                        else:
+                            return False
+
+        return not len(stack)
+                    
