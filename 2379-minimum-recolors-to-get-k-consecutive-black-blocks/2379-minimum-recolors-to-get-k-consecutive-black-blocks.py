@@ -16,7 +16,7 @@ class Solution:
         if(k == len(blocks)):
             return min_count
 
-        while(right < len(blocks)):
+        while(right < len(blocks)-1):
 
             if(blocks[left] == 'W'):
                 white_count -= 1
@@ -24,13 +24,13 @@ class Solution:
             left += 1
 
             right += 1
-            if(right < len(blocks)):
 
-                if(blocks[right] == "W"):
-                    white_count += 1
+            if(blocks[right] == "W"):
+                white_count += 1
 
 
-            print(blocks[left:right+1])
+
+            print(blocks[left:right+1], left, right, len(blocks))
             print(white_count, min_count)
 
             min_count = min(min_count, white_count)
