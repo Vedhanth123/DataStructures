@@ -1,17 +1,26 @@
 class Solution:
     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
         
-        # build dictionaries for every word
-        ans = defaultdict(list)
+        # apporach 1
 
-        for s in strs:
-            count = [0] * 26
+        answers = defaultdict(list)
 
-            for c in s:
-                count[ord(c) - ord('a')] += 1
-            
-            ans[tuple(count)].append(s)
+        # 1) sort the strings first
+        # 2) Find the frequency of each character
+        # 3) Create a tuple out of that frequency
+        # 4) Use that tuple as dictionary key
+        # 5) Place all those words who have the same tuple
+        # 6) convert that dictionary to list of lists
+
+        for x in range(len(strs)):
+
+            sorted_str = "".join(sorted(strs[x]))
+
+            freq = tuple(Counter(sorted_str).items())
+
+            print(freq)
+            answers[freq].append(strs[x])
         
-        return list(ans.values())
+        return list(answers.values())
 
 
