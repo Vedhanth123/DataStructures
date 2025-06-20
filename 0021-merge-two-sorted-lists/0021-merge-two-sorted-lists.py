@@ -15,26 +15,22 @@ class Solution:
         while(c1 and c2):
             
             if(c1.val <= c2.val):
-                temp = ListNode(c1.val)
+                curr.next = ListNode(c1.val)
                 c1 = c1.next
-                curr.next = temp
                 curr = curr.next
             else:
-                temp = ListNode(c2.val)
+                curr.next = ListNode(c2.val)
                 c2 = c2.next
-                curr.next = temp
                 curr = curr.next
 
         while(c1):
-            temp = ListNode(c1.val)
+            curr.next = ListNode(c1.val)
             c1 = c1.next
-            curr.next = temp
             curr = curr.next
 
         while(c2):
-            temp = ListNode(c2.val)
+            curr.next = ListNode(c2.val)
             c2 = c2.next
-            curr.next = temp
             curr = curr.next
         
         return head.next
