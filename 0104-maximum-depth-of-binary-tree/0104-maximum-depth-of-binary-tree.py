@@ -13,10 +13,9 @@ class Solution:
                 
                 if(root):
                     return max(height(root.left), height(root.right)) + 1
-                else:
-                    return 1
 
-            return height(root) - 1 
+
+            return height(root)
         
         else:
             return 0
