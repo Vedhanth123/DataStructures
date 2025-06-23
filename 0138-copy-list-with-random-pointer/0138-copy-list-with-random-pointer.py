@@ -10,21 +10,20 @@ class Node:
 class Solution:
     def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
         
-        
         if(not head):
-            return None
-            
-        new_list = {}
+            return 
+        
+        new_dict = {}
+        p1 = head
+        while(p1):
+            new_dict[p1] = Node(p1.val)
+            p1 = p1.next
+        
+        p1 = head
+        while(p1):
+            new_dict[p1].next = new_dict.get(p1.next)
+            new_dict[p1].random = new_dict.get(p1.random)
 
-        curr = head
-        while(curr):
-            new_list[curr] = Node(curr.val)
-            curr = curr.next
+            p1 = p1.next
         
-        curr = head
-        while(curr):
-            new_list[curr].next = new_list.get(curr.next)
-            new_list[curr].random = new_list.get(curr.random)
-            curr = curr.next
-        
-        return new_list[head]
+        return new_dict[head]
