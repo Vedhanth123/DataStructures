@@ -1,17 +1,19 @@
 class Solution:
     def combine(self, n: int, k: int) -> List[List[int]]:
-        
         answer = []
 
-        def rec(i,combs):
-
-            if(len(combs) == k):
-                answer.append(combs.copy())
+        def rec(li, n, k, i):
+            if len(li) == k:
+                answer.append(li.copy())
+                return
             
-            for j in range(i, n+1):
-                combs.append(j)
-                rec(j+1, combs)
-                combs.pop()
-        
-        rec(1,[])
+            if i > n:
+                return
+
+            for x in range(i, n + 1):
+                li.append(x)
+                rec(li, n, k, x+1)
+                li.pop() 
+
+        rec([], n, k, 1)
         return answer
