@@ -17,8 +17,8 @@ class UnionFind():
         while(curr != self.parent[curr]):
             temp = self.parent[curr]
             self.parent[curr] = root
-            curr = self.parent[temp]
-            
+            curr = temp
+
         return root
     
     def union(self, u, v):
