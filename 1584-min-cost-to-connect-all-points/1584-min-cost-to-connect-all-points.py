@@ -13,6 +13,12 @@ class UnionFind():
         while(root != self.parent[root]):
             root = self.parent[root]
         
+        curr = u
+        while(curr != self.parent[curr]):
+            temp = self.parent[curr]
+            self.parent[curr] = root
+            curr = self.parent[temp]
+            
         return root
     
     def union(self, u, v):
