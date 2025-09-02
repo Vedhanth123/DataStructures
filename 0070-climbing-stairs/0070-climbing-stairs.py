@@ -1,36 +1,12 @@
 class Solution:
     def climbStairs(self, n: int) -> int:
         
-        # def recursion(n):
+        p1 = 1
+        p2 = 2
 
-        #     if(n <= 1):
-        #         return 1
-        #     else:
-        #         return recursion(n-1) + recursion(n-2)
+        for x in range(3, n+1):
+            curr = p1 + p2
+            p1 = p2
+            p2 = curr
 
-        # return recursion(n)
-
-        # def memoization
-        # mem = [1,1] + [-1] * (n-1)
-        # def rec2(n):
-
-        #     if(mem[n] != -1):
-        #         return mem[n]
-        #     else:
-        #         mem[n] = rec2(n-1) + rec2(n-2)
-        #         return mem[n]
-    
-        # rec2(n)
-        # return mem[n]
-
-        # iteration
-        prev1 = 0
-        prev2 = 1
-        curr = 0
-        for x in range(1,n+1):
-            curr = prev2 + prev1
-            prev1 = prev2
-            prev2 = curr
-        
         return curr
-            
