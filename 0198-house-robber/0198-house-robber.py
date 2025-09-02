@@ -1,21 +1,19 @@
 class Solution:
     def rob(self, nums: List[int]) -> int:
         
-        mem = [-1] * (len(nums)+1) 
+        if(len(nums) == 1):
+            return nums[0]
+        if(len(nums) == 2):
+            return max(nums)
+        
+        h1 = nums[0]
+        h2 = max(nums[0], nums[1])
 
-        def solve(nums, index):
-            if(index >= len(nums)):
-                return 0
-            
-            if(mem[index] != -1):
-                return mem[index]
 
-            steal = nums[index] + solve(nums,index+2)
-            skip = solve(nums,index+1)
+        for x in range(2, len(nums)):
+            temp = max(h2, h1 + nums[x])
+            h1 = h2
+            h2 = temp
 
-            mem[index] = max(steal,skip)
-            return mem[index]
-
-        return solve(nums,0)
-
-                
+        
+        return h2
