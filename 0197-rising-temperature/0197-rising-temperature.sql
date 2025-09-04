@@ -1,21 +1,16 @@
 # Write your MySQL query statement below
+with Prevday as (
 
-WITH WeatherWithLag AS (
-    -- Step 1: Create a CTE with current temp and previous day's temp/date
-    SELECT
-        id,
-        recordDate,
-        temperature,
-        LAG(temperature, 1) OVER (ORDER BY recordDate) AS previous_temp,
-        LAG(recordDate, 1) OVER (ORDER BY recordDate) AS previous_date
-    FROM
-        Weather
+    select id,
+    recordDate,
+    temperature,
+    lag(recordDate, 1) over (order by recordDate) as prev_date,
+    lag(temperature, 1) over (order by recordDate) as prev_temp
+    from Weather
 )
--- Step 2: Select from the CTE where the conditions are met
-SELECT
-    id
-FROM
-    WeatherWithLag
-WHERE
-    temperature > previous_temp
-    AND DATEDIFF(recordDate, previous_date) = 1;
+
+
+select id
+from Prevday
+where temperature > prev_temp and
+datediff(recordDate, prev_date) = 1
