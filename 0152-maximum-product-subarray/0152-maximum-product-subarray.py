@@ -1,24 +1,17 @@
 class Solution:
-    def maxProduct(self, nums: List[int]) -> int:
+    def maxProduct(self, nums):
         
-        prefix_prod = 1
-        suffix_prod = 1
+        current_max = nums[0]
+        current_min = nums[0]
+        global_max = nums[0]
 
-        maxi = float('-inf')
+        for x in range(1,len(nums)):
 
 
-        for x in range(len(nums)):
+            curr_max = current_max * nums[x]
+            current_max = max(curr_max, nums[x], current_min * nums[x])
+            current_min = min(curr_max, nums[x], current_min * nums[x])
 
-            if(prefix_prod == 0):
-                prefix_prod = 1
-            if(suffix_prod == 0):
-                suffix_prod = 1
-            
-            prefix_prod *= nums[x]
-            suffix_prod *= nums[-(x+1)]
+            global_max = max(global_max, current_max)
         
-            maxi = max(maxi, max(prefix_prod, suffix_prod))
-    
-        return maxi
-            
-            
+        return global_max
