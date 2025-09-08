@@ -7,25 +7,12 @@
 class Solution:
     def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
         
-        if(root):
+        def helper(root):
 
-            queue = [root]
-
-            while(queue):
-
-                for x in range(len(queue)):
-
-                    curr = queue.pop(0)
-
-                    temp = curr.left
-                    curr.left = curr.right
-                    curr.right = temp
-
-                    if(curr.left):
-                        queue.append(curr.left)
-                    if(curr.right):
-                        queue.append(curr.right)
-
+            if(root):
+                root.left, root.right = root.right, root.left
+                root.left = helper(root.left)
+                root.right = helper(root.right)
+                return root
         
-        return root
-        
+        return helper(root)
