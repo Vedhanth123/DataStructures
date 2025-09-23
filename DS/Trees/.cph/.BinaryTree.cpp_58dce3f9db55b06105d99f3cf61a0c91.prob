@@ -1,1 +1,0 @@
-{"name":"Local: BinaryTree","url":"/mnt/c/Code/plutonium/DS/Trees/BinaryTree.cpp","tests":[{"id":1668927708649,"input":"","output":"Preorder: 1245367\nInorder: 4251637\nPostorder: 4526731"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/mnt/c/Code/plutonium/DS/Trees/BinaryTree.cpp","group":"local","local":true}

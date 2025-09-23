@@ -1,0 +1,9 @@
+test_case_name,weights,costs,capacity,expected_joy,expected_items
+Standard Scenario,"10|20|30","60|100|120",50,220,"(20,100)|(30,120)"
+All Items Fit,"5|10|15","10|30|20",100,60,"(5,10)|(10,30)|(15,20)"
+Greedy Trap (Joy),"20|15|15","100|70|70",30,140,"(15,70)|(15,70)"
+Greedy Trap (Ratio),"10|20|30","60|100|120",50,220,"(20,100)|(30,120)"
+Empty Input,"","",100,0,""
+Zero Capacity,"10|20|30","60|100|120",0,0,""
+Items Too Heavy,"10|20|30","60|100|120",9,0,""
+Zero Weight Item,"10|0|20","100|50|150",25,200,"(0,50)|(20,150)"
