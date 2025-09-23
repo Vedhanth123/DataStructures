@@ -1,37 +1,35 @@
 # Definition for a binary tree node.
-# class TreeNode:
-#     def __init__(self, val=0, left=None, right=None):
-#         self.val = val
-#         self.left = left
-#         self.right = right
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
 class Solution:
-
-
-    def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
-        
-        preorder = []
-
-        def inorder(root,ino):
-            if(root):
-                inorder(root.left,ino)
-                ino.append(root.val)
-                inorder(root.right,ino)
-            else:
-                ino.append(None)
-            return ino
-        
-        def preorder(root,pre):
-            if(root):
-                pre.append(root.val)
-                preorder(root.left,pre)
-                preorder(root.right,pre)
-            else:
-                pre.append(None)
-            return pre
-        
-        ip = inorder(p, [])
-        iq = inorder(q, [])
-        pp = preorder(p, [])
-        pq = preorder(q, [])
+    def isSameTree(self, p, q) -> bool:
     
-        return ((ip == iq) and (pp == pq))
+        def helper(p, q):
+
+            if(not p and not q):
+                return True
+            if(not p or not q):
+                return False
+            if(p.val != q.val):
+                return False
+            
+            return helper(p.left, q.left) and helper(p.right, q.right)
+    
+        return (helper(p, q))
+
+if __name__ == '__main__':
+
+
+    p = TreeNode(1)
+    p.left = TreeNode(2)
+    p.right = TreeNode(3)
+
+    q = TreeNode(1)
+    q.left = TreeNode(2)
+    q.right = TreeNode(4)
+
+    obj = Solution()
+    obj.isSameTree(p, q)
