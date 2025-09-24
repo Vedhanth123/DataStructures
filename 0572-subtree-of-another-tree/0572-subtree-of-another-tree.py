@@ -1,41 +1,32 @@
 # Definition for a binary tree node.
-# class TreeNode:
-#     def __init__(self, val=0, left=None, right=None):
-#         self.val = val
-#         self.left = left
-#         self.right = right
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
 class Solution:
-    @staticmethod
-    def isSubtree(root, subRoot) -> bool:
-
-        
-        def inorder(root, arr):
-            
-            if(root):
-                arr.append(root.val)
-                inorder(root.left, arr)
-                inorder(root.right, arr)
-            else:
-                return arr
-        
-        subRoot_inorder = []
-
-        inorder(subRoot, subRoot_inorder)
-
-        print(subRoot_inorder)
-
-        answer = False
-        def finder(root, val):
-
-            if(root.val == val):
-                root_inorder = []
-                answer = subRoot_inorder == inorder(root, root_inorder)
-                return
-            finder(root.left, val)
-            finder(root.right, val)
     
+    def issametree(self, p, q) -> bool:
 
+        if(not p and not q):
+            return True
+        if(not p or not q):
+            return False
+        if(p.val != q.val):
+            return False
+        return self.issametree(p.left, q.left) and self.issametree(p.right, q.right)
+    
+    def isSubtree(self, root, subRoot) -> bool:
 
+        if(not root):
+            return False
+        
+        if(self.issametree(root,subRoot) == True):
+            return True
+        
+        return self.isSubtree(root.left, subRoot) or self.isSubtree(root.right, subRoot)
+    
 
         
 if __name__ == '__main__':
@@ -52,4 +43,4 @@ if __name__ == '__main__':
     subRoot.right = TreeNode(2)
 
     obj = Solution()
-    obj.isSubtree(root = root, subRoot = subRoot)
+    print(obj.isSubtree(root = root, subRoot = subRoot))
