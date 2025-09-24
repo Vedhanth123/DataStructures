@@ -8,27 +8,22 @@ class TreeNode:
 class Solution:
     def minDepth(self, root) -> int:    
 
-        answer = 0
-        if(not root):
-            return answer
-
-        queue = [root]
-
-        while(queue):
-
-            for x in range(len(queue)):
-                curr = queue.pop(0)
-                if(not curr.left and not curr.right):
-                    return answer + 1
-                if(curr.left):
-                    queue.append(curr.left)
-                if(curr.right):
-                    queue.append(curr.right)
-
+        def helper(root):
             
-            answer += 1
-        
-        return answer
+            if(root):
+                if(not root.left and not root.right):
+                    return 1
+                
+                if(not root.left and root.right):
+                    return 1 + helper(root.right)
+                
+                if(not root.right and root.left):
+                    return 1 + helper(root.left)
+                
+                return 1 + min(helper(root.left), helper(root.right))
+            return 0
+
+        return(helper(root))
 
 if __name__ == '__main__':
 
