@@ -1,29 +1,32 @@
 class Solution:
-    def permute(self, nums: List[int]) -> List[List[int]]:
-        def permut(nums,index):
+    def permute(self, nums):
+        
+
+        ans = []
+        def helper(nums, index, arr, included):
 
             if(index == len(nums)):
-                return [[]]
-            
-            res = []
-            perms = permut(nums,index+1)
-            for perm in perms:
-
-                for x in range(len(perm)+1):
-                    cp = perm.copy()
-                    cp.insert(x,nums[index])
-                    res.append(cp)
-            
-            return res
-
-        return permut(nums,0)
-
+                ans.append(arr.copy())
+                return
             
 
+            for x in range(len(nums)):
+
+                if(nums[x] not in included):
+                    arr.append(nums[x])
+                    included.add(nums[x])
+                    helper(nums, index+1, arr, included)
+                    arr.pop()
+                    included.remove(nums[x])
+            
+        
+        helper(nums, 0, [], set())
+        return ans
 
 
+if __name__ == '__main__':
+    
+    obj = Solution()
+    obj.permute([1,2,3])
 
-                
 
-
-        answer

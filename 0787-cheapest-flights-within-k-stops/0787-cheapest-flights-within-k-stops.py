@@ -1,31 +1,23 @@
+from typing import List
+from collections import defaultdict
+
 class Solution:
     def findCheapestPrice(self, n: int, flights: List[List[int]], src: int, dst: int, k: int) -> int:
         
-        prices = [float('inf')] * n
-        prices[src] = 0
+        distances = [0] + [float('inf')] * (n-1)
 
+        while(k != -1):
 
-        while k >= 0:
+            temp = distances.copy()
+            for source, destination, price in flights:
 
-            # 1. Right at the beginning, make a copy of the prices from the last iteration.
-            #    This `temp` array will store the new prices we find in this iteration.
-            temp = prices.copy()
-
-            # 2. Now, loop through all the flights to calculate the new prices.
-            for u, v, dist in flights:
-                
-                # 3. CRUCIAL: Read from the original `prices` array (the previous state)
-                #    and write the result into your `temp` array (the new state).
-                if prices[u] != float('inf'):
-                    temp[v] = min(temp[v], prices[u] + dist)
-
-            # 4. After checking all flights, the `temp` array now holds the best prices
-            #    for this number of stops. So, update `prices` to be this new state
-            #    for the next iteration of the loop.
-            prices = temp
+                temp[destination] = min(distances[destination], temp[source] + price)
             
-            # 5. Decrement k
+            distances = temp
             k -= 1
-    
+
+        return distances[dst]
+
         
-        return prices[dst] if prices[dst] != float('inf') else -1
+obj = Solution()
+obj.findCheapestPrice(n = 4, flights = [[0,1,100],[1,2,100],[2,0,100],[1,3,600],[2,3,200]], src = 0, dst = 3, k = 1)
