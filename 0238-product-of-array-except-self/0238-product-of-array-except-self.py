@@ -1,19 +1,24 @@
+from typing import List
+
 class Solution:
     def productExceptSelf(self, nums: List[int]) -> List[int]:
         
-        prefix = 1
-        postfix = 1
 
-        result = [1] * len(nums)
+        answer = [1]
 
-        for x in range(len(nums)):
-            
-            result[x] *= prefix
-            prefix *= nums[x]
+        prefix_prod = 1
+        for x in range(len(nums)-1):
+            prefix_prod *= nums[x]
+            answer.append(prefix_prod)
         
-        for x in range(len(nums)-1,-1,-1):
 
-            result[x] *= postfix
-            postfix *= nums[x]
-    
-        return result
+        prefix_prod = 1
+        for x in range(len(nums) -1, 0, -1):
+            prefix_prod *= nums[x]
+            answer[x-1] *= prefix_prod
+        
+        return answer
+        
+
+obj = Solution()
+obj.productExceptSelf([1,2,3,4])
