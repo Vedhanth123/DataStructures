@@ -1,25 +1,31 @@
 class Solution:
-    def findRedundantConnection(self, edges: List[List[int]]) -> List[int]:
+    def findRedundantConnection(self, edges):
 
         graph = {x+1:[] for x in range(len(edges))}
+        def cycle_detection(graph, node, visited, visiting):
 
-        def check_path(u, v, visited):
-
-            visited.add(u)
-            if(u == v):
+            if(node in visiting):
                 return True
-
-            for neighbour in graph[u]:
+            
+            visited.add(node)
+            visiting.add(node)
+            for neighbour in graph[node]:
                 if(neighbour not in visited):
-                    if(check_path(neighbour, v, visited)):
-                        return True
-        
+                    cycle_detection(graph, neighbour, visited, visiting)
+            
             return False
         
         for u,v in edges:
 
-            if(check_path(u,v, set())):
-                return [u,v]
-
             graph[u].append(v)
             graph[v].append(u)
+            answer = cycle_detection(graph, u, set(), set())
+            print(answer)
+            if(answer):
+                return [u,v]
+            
+if __name__ == "__main__":
+
+    obj = Solution()
+    obj.findRedundantConnection(edges = [[1,2],[1,3],[2,3]])
+
