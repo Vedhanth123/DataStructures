@@ -1,31 +1,16 @@
 class Solution:
     def numDecodings(self, s: str) -> int:
         
-        memo = {}
+        dp = [1] + [0] * len(s)
 
-        def rec(x):
+        for x in range(1,len(s)+1):
 
-            if(x in memo):
-                return memo[x]
-            if(x >= len(s)):
-                return 1
-            
-            if(int(s[x]) == 0):
-                memo[x] = 0
-                return memo[x]
+            if(int(s[x-1]) != 0):
+                dp[x] = dp[x-1]
 
-            if(int(s[x]) == 1 and x+1 < len(s)):
-                memo[x] = rec(x + 2) + rec(x + 1)
-                return memo[x]
-            if(int(s[x]) == 2 and x+1 < len(s) and int(s[x+1]) <= 6):
-                memo[x] = rec(x + 2) + rec(x + 1)
-                return memo[x]
-            else:
-                memo[x] = rec(x+1)
-                return memo[x]
-
-        return rec(0)
-
-            
-
-            
+            if(x-2 >= 0 and int(s[x-2]) == 1):
+                dp[x] += dp[x-2]
+            elif(x-2 >= 0 and int(s[x-2]) == 2 and int(s[x-1]) <= 6):
+                dp[x] += dp[x-2]
+        
+        return dp[-1]
