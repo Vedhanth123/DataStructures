@@ -1,0 +1,9 @@
+test_case_name,weights,values,max_weight,expected_value,expected_items
+"General Case","1|2|3|4","10|8|12|15",5,25,"[(1, 10),(4, 15)]"
+"Capacity High","10|20|30","60|100|120",50,220,"[(20, 100),(30, 120)]"
+"Weight is Limiting","1|1|1","60|100|120",2,220,"[(1, 100),(1, 120)]"
+"Edge Case (Zero Weight Capacity)","1|2|3","10|20|30",0,0,""
+"Edge Case (Empty Items)","","",10,0,""
+"All Items Fit","1|1|1","100|100|100",5,300,"[(1, 100),(1, 100),(1, 100)]"
+"No Items Fit","10|20","100|200",5,0,""
+"Tricky Case","5|3|4|2","60|50|70|30",5,80,"[(3, 50),(2, 30)]"

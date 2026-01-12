@@ -4,31 +4,28 @@ from typing import List
 class Solution:
     def trap(self, height: List[int]) -> int:
         
-        
-        maxLeft = [0] * len(height)
-        maxRight = [0] * len(height)
+        maxLeft = []
+        maxRight = []
 
-        maxleft = 0
-        maxright = 0
-
-        total = 0
+        prefixLeft = height[0]
+        suffixRight = height[-1]
 
         for x in range(len(height)):
-            maxleft = max(maxleft, height[x])
-            maxLeft[x] = maxleft
 
-        for x in range(len(height)-1, -1, -1):
-            maxright = max(maxright, height[x])
-            maxRight[x] = maxright
-        
-        
+            prefixLeft = max(prefixLeft, height[x])
+            suffixRight = max(suffixRight, height[len(height)-1-x])
+
+            maxLeft.append(prefixLeft)
+            maxRight.append(suffixRight)
+    
+        print(maxLeft, maxRight)
+
+        maxRight.reverse()
+        answer = 0
         for x in range(1, len(height)-1):
 
-            borders = min(maxRight[x+1], maxLeft[x-1])
-            depth = height[x]
-            
-            total += max(0, borders-depth)
+            answer += max(0, min(maxLeft[x-1], maxRight[x+1]- height[x]))
         
- 
+        return answer
 obj = Solution()
 obj.trap(height = [0,1,0,2,1,0,1,3,2,1,2,1])

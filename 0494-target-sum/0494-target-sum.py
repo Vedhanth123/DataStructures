@@ -1,21 +1,50 @@
 class Solution:
-    def findTargetSumWays(self, nums: List[int], target: int) -> int:
+    def findTargetSumWays(self, nums, target):
         
+        '''
+        memo = {}
 
-        if(target > sum(nums) or target < -sum(nums)):
-            return 0
+        def helper(index, total):
 
+            if((index, total) in memo):
+                return memo[(index,total)]
+            
+            if(index >= len(nums) and total == target):
+                return 1
+            elif(index >= len(nums) and total != target):
+                return 0
+            
+            memo[(index, total)] = helper(index + 1, total + nums[index]) + helper(index + 1, total - nums[index])
+            return memo[(index, total)]
+
+        
+        return helper(0,0)
+        '''
         n = len(nums)
-        m = (sum(nums)+1)*2
+        
+        m = (2*target)
 
         dp = [[0] * (m+1) for _ in range(n+1)]
-        dp[0][m//2] = 1
     
-        for x in range(n):
-            for y in range(m):
-
-                if(dp[x][y] > 0):
-                    dp[x+1][y+nums[x]] += dp[x][y]
-                    dp[x+1][y-nums[x]] += dp[x][y]
+        dp[-1][target+target] = 1
+    
+        for row in dp:
+            print(row)
         
-        return dp[-1][(m//2) + target]
+        for x in range(n-1,-1,-1):
+            for y in range(m-1,-1,-1):
+
+                if(y + nums[x] > m):
+                    dp[x][y] = dp[x+1][y-nums[x]]
+                if(y - nums[x] < 0):
+                    dp[x][y] = dp[x+1][y+nums[x]]
+                
+                if(y + nums[x] <= m and y - nums[x] >= 0):
+                    dp[x][y] = dp[x+1][y + nums[x]] + dp[x+1][y - nums[x]]
+        
+        print('-' * 100)
+        for row in dp:
+            print(row)
+
+Solution().findTargetSumWays(nums = [1,1,1,1,1], target = 3)
+

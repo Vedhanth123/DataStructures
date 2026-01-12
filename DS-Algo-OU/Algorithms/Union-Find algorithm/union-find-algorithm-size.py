@@ -22,4 +22,34 @@ class UnionFind():
         else:
             self.parent[root_v] = root_u
             self.size[root_u] += self.size[root_v]
+    
+
+class UnionFind():
+
+    def __init__(self, n):
+        self.parent = [x for x in range(n)]
+        self.size = [1] * n
+
+    def find(self, u):
+
+        if(u != self.parent[u]):
+            self.parent[u] = self.find(self.parent[u])
+        return self.parent[u]
+
+    def union(self, u, v):
+
+        uParent = self.find(u)
+        vParent = self.find(v)
+
+        if(uParent != vParent):
+
+            if(self.size[uParent] > self.size[vParent]):
+                self.size[uParent] += self.size[vParent]
+                self.parent[vParent] = uParent
+            else:
+                self.size[vParent] += self.size[uParent]
+                self.parent[uParent] = vParent
         
+
+            
+

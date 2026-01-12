@@ -1,9 +1,0 @@
-test_case_name,weights,values,capacity,expected_count
-One Optimal Subset,"[1,2,3]","[10,15,30]",4,1
-Multiple Optimal Subsets,"[1,2,3,1]","[10,20,30,30]",3,2
-Items Combine for Optimal,"[1,2,3]","[10,20,30]",3,2
-Edge Case (Zero Capacity),"[1,2,3]","[10,20,30]",0,1
-Edge Case (Empty Items),"[]","[]",10,1
-Complex Case,"[4,2,2,3]","[10,5,5,8]",6,3
-All Items Fit,"[1,1,1]","[10,10,10]",5,1
-No Items Fit,"[10,20]","[100,200]",5,1
