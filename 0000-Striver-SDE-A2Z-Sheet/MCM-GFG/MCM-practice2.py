@@ -98,6 +98,13 @@ class Solution:
 
         # bottom up
         '''
+        1) copy the base case
+        2) write down the changing parameters (changing states) we had i,j
+        3) copy the recurrence
+
+        so... i went from 1 to n-1 right so... we now go from n-1 to 1
+        i -> n-1 to 0
+        j -> 
         '''
 
         n = len(arr)

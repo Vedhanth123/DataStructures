@@ -1,18 +1,18 @@
 class Solution:
     def myPow(self, x: float, n: int) -> float:
         
-        answer = 1
+        # positive n
+        def rec(x,n):
 
-        if (n < 0):
-            x = 1/x
-            n = -n
+            if(n == 0):
+                return 1
+            return x * rec(x,n-1)
 
-        while(n > 0):
-
-            if(n % 2 == 1):
-                answer *= x
-
-            x *= x
-            n //= 2
         
-        return answer
+        if(n < 0):
+            return 1/rec(x,-n)
+        else:
+            return rec(x,n)
+
+Solution().myPow(x = 2.00000, n = -2)
+        
