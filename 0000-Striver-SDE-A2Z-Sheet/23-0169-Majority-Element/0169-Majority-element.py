@@ -1,6 +1,7 @@
 class Solution:
     def majorityElement(self, nums: list[int]) -> int:
         
+        # --------------------------------- Moore's Voting Algorithm -------------------------------------
         majorityElement = 0
         majorityElementCount = 1
 
