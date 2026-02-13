@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Group Anagrams Visualizer</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+
+        .tab-buttons {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .tab-button {
+            padding: 8px 16px;
+            margin: 0 5px;
+            background: #e0e0e0;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .tab-button.active {
+            background: #3498db;
+            color: white;
+        }
+
+        .input-display {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+        }
+
+        .string-item {
+            display: inline-block;
+            padding: 5px 10px;
+            margin: 3px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        .string-item.active {
+            border-color: #3498db;
+            background: #e1f0fa;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .controls button {
+            padding: 8px 16px;
+            margin: 0 5px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .controls button:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
+        }
+
+        .step-indicator {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .step-description {
+            padding: 10px;
+            background: #e1f0fa;
+            border-left: 5px solid #3498db;
+            margin-bottom: 20px;
+        }
+
+        .visualizer {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .hashmap,
+        .result {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            background: #f9f9f9;
+            min-height: 150px;
+        }
+
+        .hashmap h3,
+        .result h3 {
+            margin-top: 0;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .hashmap-item {
+            margin-bottom: 10px;
+            padding: 8px;
+            background: white;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        .hashmap-key {
+            font-family: monospace;
+            font-size: 0.9em;
+            background: #f0f0f0;
+            padding: 3px 6px;
+            border-radius: 3px;
+        }
+
+        .hashmap-values {
+            margin-top: 5px;
+        }
+
+        .complexity-analysis {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .highlight {
+            background-color: #fff3cd;
+            padding: 3px;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Group Anagrams Visualizer</h1> <!-- Approach Selection -->
+        <div class="tab-buttons">
+            <button id="sorting-tab" class="tab-button active">Sorting Approach</button>
+            <button id="counting-tab" class="tab-button">Character Count Approach</button>
+            <button id="prime-tab" class="tab-button">Prime Number Encoding</button>
+        </div>
+
+        <!-- Input Display -->
+        <div class="input-display">
+            <h3>Input Array:</h3>
+            <div id="input-strings"></div>
+        </div>
+
+        <!-- Controls -->
+        <div class="controls">
+            <button id="play-button">▶ Play</button>
+            <button id="prev-button" disabled>← Previous</button>
+            <button id="next-button">Next →</button>
+            <button id="reset-button">↺ Reset</button>
+        </div>
+
+        <!-- Step Indicator -->
+        <div class="step-indicator">
+            Step <span id="current-step">1</span> of <span id="total-steps">10</span>
+        </div>
+
+        <!-- Step Description -->
+        <div class="step-description">
+            <p id="step-text">Initializing the algorithm...</p>
+        </div>
+
+        <!-- Visualization Area -->
+        <div class="visualizer">
+            <div class="hashmap">
+                <h3>HashMap:</h3>
+                <div id="hashmap-content"></div>
+            </div>
+
+            <div class="result">
+                <h3>Result:</h3>
+                <div id="result-content"></div>
+            </div>
+        </div>
+
+        <!-- Processing Details -->
+        <div id="processing-details"
+            style="display: none; margin: 20px 0; padding: 15px; background: #fff9e6; border: 1px solid #ffe066; border-radius: 5px;">
+            <h3 style="margin-top: 0;">Processing Details:</h3>
+            <div id="details-content"></div>
+        </div>
+
+        <!-- Complexity Analysis -->
+        <div class="complexity-analysis">
+            <h3>Complexity Analysis:</h3>
+            <div id="complexity-text">
+                <p><strong>Sorting Approach:</strong></p>
+                <p>Time Complexity: O(N × M log M) where N = number of strings, M = average string length</p>
+                <p>Space Complexity: O(N × M) for storing the groups</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Input data
+        const inputStrings = ["eat", "tea", "tan", "ate", "nat", "bat"];
+
+        // Set up visualization state
+        let currentStep = 0;
+        let isPlaying = false;
+        let activeApproach = 'sorting';
+        let executionSteps = [];
+        let playTimer = null;
+
+        // DOM Elements
+        const inputDisplay = document.getElementById('input-strings');
+        const currentStepEl = document.getElementById('current-step');
+        const totalStepsEl = document.getElementById('total-steps');
+        const stepTextEl = document.getElementById('step-text');
+        const hashmapContentEl = document.getElementById('hashmap-content');
+        const resultContentEl = document.getElementById('result-content');
+        const processingDetailsEl = document.getElementById('processing-details');
+        const detailsContentEl = document.getElementById('details-content');
+        const complexityTextEl = document.getElementById('complexity-text');        // Buttons
+        const playButton = document.getElementById('play-button');
+        const prevButton = document.getElementById('prev-button');
+        const nextButton = document.getElementById('next-button');
+        const resetButton = document.getElementById('reset-button');
+        const sortingTabButton = document.getElementById('sorting-tab');
+        const countingTabButton = document.getElementById('counting-tab');
+        const primeTabButton = document.getElementById('prime-tab');
+
+        // Generate steps for the sorting approach
+        function generateSortingSteps() {
+            const steps = [];
+            const hashMap = {};
+            const result = [];
+
+            // Initial state
+            steps.push({
+                description: 'Initialize empty hashmap and result array',
+                hashMap: {},
+                result: [],
+                currentString: null,
+                currentKey: null,
+                processingDetails: null
+            });
+
+            // Process each string
+            inputStrings.forEach(str => {
+                // Start processing this string
+                steps.push({
+                    description: `Processing string "${str}"`,
+                    hashMap: { ...hashMap },
+                    result: [...result],
+                    currentString: str,
+                    currentKey: null,
+                    processingDetails: null
+                });
+
+                // Sort the string to create a key
+                const chars = str.split('');
+                const sortedChars = [...chars].sort();
+                const key = sortedChars.join('');
+
+                steps.push({
+                    description: `Sorting "${str}" to create key "${key}"`,
+                    hashMap: { ...hashMap },
+                    result: [...result],
+                    currentString: str,
+                    currentKey: key,
+                    processingDetails: {
+                        type: 'sorting',
+                        original: chars,
+                        sorted: sortedChars
+                    }
+                });
+
+                // Add to hashmap
+                if (!hashMap[key]) {
+                    hashMap[key] = [];
+                }
+                hashMap[key] = [...hashMap[key], str];
+
+                steps.push({
+                    description: `Adding "${str}" to hashmap group with key "${key}"`,
+                    hashMap: { ...hashMap },
+                    result: [...result],
+                    currentString: str,
+                    currentKey: key,
+                    processingDetails: null
+                });
+            });
+
+            // Convert hashmap to result array
+            Object.values(hashMap).forEach(group => {
+                result.push([...group]);
+            });
+
+            steps.push({
+                description: 'Converting hashmap values to final result array',
+                hashMap: { ...hashMap },
+                result: [...result],
+                currentString: null,
+                currentKey: null,
+                processingDetails: null
+            });
+
+            return steps;
+        }
+
+        // Generate steps for the character counting approach
+        function generateCountingSteps() {
+            const steps = [];
+            const hashMap = {};
+            const result = [];
+
+            // Initial state
+            steps.push({
+                description: 'Initialize empty hashmap and result array',
+                hashMap: {},
+                result: [],
+                currentString: null,
+                currentKey: null,
+                processingDetails: null
+            });
+
+            // Process each string
+            inputStrings.forEach(str => {
+                // Start processing this string
+                steps.push({
+                    description: `Processing string "${str}"`,
+                    hashMap: { ...hashMap },
+                    result: [...result],
+                    currentString: str,
+                    currentKey: null,
+                    processingDetails: null
+                });
+
+                // Count character frequencies
+                const freq = Array(26).fill(0);
+                const freqDisplay = {};
+
+                for (let i = 0; i < str.length; i++) {
+                    const char = str[i];
+                    const charIndex = char.charCodeAt(0) - 'a'.charCodeAt(0);
+                    freq[charIndex]++;
+                    freqDisplay[char] = (freqDisplay[char] || 0) + 1;
+                }
+
+                steps.push({
+                    description: `Counting character frequencies for "${str}"`,
+                    hashMap: { ...hashMap },
+                    result: [...result],
+                    currentString: str,
+                    currentKey: null,
+                    processingDetails: {
+                        type: 'counting',
+                        frequencies: freqDisplay
+                    }
+                });
+
+                // Create key from frequency array
+                const key = freq.join(',');
+
+                steps.push({
+                    description: `Creating key from character frequencies`,
+                    hashMap: { ...hashMap },
+                    result: [...result],
+                    currentString: str,
+                    currentKey: key,
+                    processingDetails: {
+                        type: 'key',
+                        key: key
+                    }
+                });
+
+                // Add to hashmap
+                if (!hashMap[key]) {
+                    hashMap[key] = [];
+                }
+                hashMap[key] = [...hashMap[key], str];
+
+                steps.push({
+                    description: `Adding "${str}" to hashmap group with key "${key}"`,
+                    hashMap: { ...hashMap },
+                    result: [...result],
+                    currentString: str,
+                    currentKey: key,
+                    processingDetails: null
+                });
+            });
+
+            // Convert hashmap to result array
+            Object.values(hashMap).forEach(group => {
+                result.push([...group]);
+            });
+
+            steps.push({
+                description: 'Converting hashmap values to final result array',
+                hashMap: { ...hashMap },
+                result: [...result],
+                currentString: null,
+                currentKey: null,
+                processingDetails: null
+            }); return steps;
+        }
+
+        // Generate steps for the prime number encoding approach
+        function generatePrimeSteps() {
+            const steps = [];
+            const hashMap = {};
+            const result = [];
+
+            // First 26 prime numbers for a-z
+            const primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41,
+                43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101];
+
+            // Initial state
+            steps.push({
+                description: 'Initialize empty hashmap and result array',
+                hashMap: {},
+                result: [],
+                currentString: null,
+                currentKey: null,
+                processingDetails: null
+            });
+
+            // Process each string
+            inputStrings.forEach(str => {
+                // Start processing this string
+                steps.push({
+                    description: `Processing string "${str}"`,
+                    hashMap: { ...hashMap },
+                    result: [...result],
+                    currentString: str,
+                    currentKey: null,
+                    processingDetails: null
+                });
+
+                // Show prime number assignments
+                steps.push({
+                    description: `Assigning prime numbers to characters`,
+                    hashMap: { ...hashMap },
+                    result: [...result],
+                    currentString: str,
+                    currentKey: null,
+                    processingDetails: {
+                        type: 'primes',
+                        assignments: ['a → 2', 'b → 3', 'c → 5', 'd → 7', 'e → 11', '...']
+                    }
+                });
+
+                // Calculate prime number product
+                let product = 1;
+                const charPrimes = {};
+
+                for (let i = 0; i < str.length; i++) {
+                    const char = str[i];
+                    const index = char.charCodeAt(0) - 'a'.charCodeAt(0);
+                    const prime = primes[index];
+                    product *= prime;
+                    charPrimes[char] = prime;
+                }
+
+                // Show prime calculations
+                steps.push({
+                    description: `Calculating prime product for "${str}"`,
+                    hashMap: { ...hashMap },
+                    result: [...result],
+                    currentString: str,
+                    currentKey: null,
+                    processingDetails: {
+                        type: 'prime-calc',
+                        charPrimes: charPrimes,
+                        product: product
+                    }
+                });
+
+                // Create key
+                steps.push({
+                    description: `Using prime product ${product} as key`,
+                    hashMap: { ...hashMap },
+                    result: [...result],
+                    currentString: str,
+                    currentKey: product,
+                    processingDetails: {
+                        type: 'key',
+                        key: product
+                    }
+                });
+
+                // Add to hashmap
+                if (!hashMap[product]) {
+                    hashMap[product] = [];
+                }
+                hashMap[product].push(str);
+
+                steps.push({
+                    description: `Adding "${str}" to hashmap with prime product key`,
+                    hashMap: { ...hashMap },
+                    result: [...result],
+                    currentString: str,
+                    currentKey: product,
+                    processingDetails: null
+                });
+            });
+
+            // Final result
+            const finalResult = Object.values(hashMap);
+            steps.push({
+                description: 'Converting hashmap values to final result array',
+                hashMap: { ...hashMap },
+                result: finalResult,
+                currentString: null,
+                currentKey: null,
+                processingDetails: null
+            });
+
+            return steps;
+        }
+
+        // Initialize the visualization
+        function initVisualization() {
+            // Display input strings
+            inputDisplay.innerHTML = '';
+            inputStrings.forEach(str => {
+                const div = document.createElement('div');
+                div.className = 'string-item';
+                div.textContent = `"${str}"`;
+                div.dataset.string = str;
+                inputDisplay.appendChild(div);
+            });            // Set up steps based on approach
+            if (activeApproach === 'sorting') {
+                executionSteps = generateSortingSteps();
+                complexityTextEl.innerHTML = `
+                    <p><strong>Sorting Approach:</strong></p>
+                    <p>Time Complexity: O(N × M log M) where N = number of strings, M = average string length</p>
+                    <p>Space Complexity: O(N × M) for storing the groups</p>
+                `;
+            } else if (activeApproach === 'counting') {
+                executionSteps = generateCountingSteps();
+                complexityTextEl.innerHTML = `
+                    <p><strong>Character Counting Approach:</strong></p>
+                    <p>Time Complexity: O(N × M) where N = number of strings, M = average string length</p>
+                    <p>Space Complexity: O(N × M) for storing the groups</p>
+                    <p>This is more efficient for long strings since we avoid the log M factor from sorting!</p>
+                `;
+            } else if (activeApproach === 'prime') {
+                executionSteps = generatePrimeSteps();
+                complexityTextEl.innerHTML = `
+                    <p><strong>Prime Number Encoding Approach:</strong></p>
+                    <p>Time Complexity: O(N × M) where N = number of strings, M = average string length</p>
+                    <p>Space Complexity: O(N × M) for storing the groups</p>
+                    <p>This mathematical approach uses unique prime number products as keys.</p>
+                    <p><strong>Warning:</strong> Can cause integer overflow for long strings!</p>
+                `;
+            }
+
+            // Update step indicator
+            totalStepsEl.textContent = executionSteps.length;
+
+            // Reset state
+            currentStep = 0;
+            isPlaying = false;
+            playButton.textContent = "▶ Play";
+
+            // Update visualization
+            updateVisualization();
+        }
+
+        // Update visualization based on current step
+        function updateVisualization() {
+            const stepData = executionSteps[currentStep];
+
+            // Update step counter
+            currentStepEl.textContent = currentStep + 1;
+
+            // Update step description
+            stepTextEl.textContent = stepData.description;
+
+            // Update input string highlighting
+            document.querySelectorAll('.string-item').forEach(item => {
+                if (item.dataset.string === stepData.currentString) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+
+            // Update hashmap display
+            hashmapContentEl.innerHTML = '';
+            if (Object.keys(stepData.hashMap).length === 0) {
+                hashmapContentEl.innerHTML = '<p><em>Empty hashmap</em></p>';
+            } else {
+                Object.entries(stepData.hashMap).forEach(([key, values]) => {
+                    const div = document.createElement('div');
+                    div.className = 'hashmap-item';
+
+                    let isHighlighted = key === stepData.currentKey;
+                    if (isHighlighted) {
+                        div.style.borderColor = '#3498db';
+                    }
+
+                    div.innerHTML = `
+                        <div>Key: <span class="hashmap-key">${key}</span></div>
+                        <div class="hashmap-values">Values: ${values.map(v =>
+                        `<span class="${v === stepData.currentString ? 'highlight' : ''}">"${v}"</span>`
+                    ).join(', ')}</div>
+                    `;
+                    hashmapContentEl.appendChild(div);
+                });
+            }
+
+            // Update result display
+            resultContentEl.innerHTML = '';
+            if (stepData.result.length === 0) {
+                resultContentEl.innerHTML = '<p><em>Result will appear here</em></p>';
+            } else {
+                stepData.result.forEach((group, index) => {
+                    const div = document.createElement('div');
+                    div.className = 'hashmap-item';
+                    div.innerHTML = `
+                        <div>Group ${index + 1}: ${group.map(v => `"${v}"`).join(', ')}</div>
+                    `;
+                    resultContentEl.appendChild(div);
+                });
+            }
+
+            // Update processing details
+            if (stepData.processingDetails) {
+                processingDetailsEl.style.display = 'block';
+
+                if (stepData.processingDetails.type === 'sorting') {
+                    detailsContentEl.innerHTML = `
+                        <p>Original string: ${stepData.processingDetails.original.map(c =>
+                        `<span style="display:inline-block; margin:0 2px; padding:3px 8px; background:#f8d7da; border-radius:3px;">${c}</span>`
+                    ).join('')}</p>
+                        <p>Sorted string: ${stepData.processingDetails.sorted.map(c =>
+                        `<span style="display:inline-block; margin:0 2px; padding:3px 8px; background:#d4edda; border-radius:3px;">${c}</span>`
+                    ).join('')}</p>
+                    `;
+                } else if (stepData.processingDetails.type === 'counting') {
+                    let freqContent = '';
+                    Object.entries(stepData.processingDetails.frequencies).forEach(([char, count]) => {
+                        freqContent += `<div style="display:inline-block; margin:3px; padding:5px 10px; background:#e2e3ff; border-radius:5px;">
+                            '${char}': ${count}
+                        </div>`;
+                    });
+                    detailsContentEl.innerHTML = `<p>Character frequencies:</p>${freqContent}`;
+                } else if (stepData.processingDetails.type === 'key') {
+                    detailsContentEl.innerHTML = `<p>Generated key: <span style="font-family:monospace; background:#f0f0f0; padding:3px 6px; border-radius:3px;">${stepData.processingDetails.key}</span></p>`;
+                }
+            } else {
+                processingDetailsEl.style.display = 'none';
+            }
+
+            // Update button states
+            prevButton.disabled = currentStep === 0;
+            nextButton.disabled = currentStep === executionSteps.length - 1;
+        }
+
+        // Play the visualization automatically
+        function playVisualization() {
+            isPlaying = !isPlaying;
+
+            if (isPlaying) {
+                playButton.textContent = "⏸ Pause";
+
+                playTimer = setInterval(() => {
+                    if (currentStep < executionSteps.length - 1) {
+                        currentStep++;
+                        updateVisualization();
+                    } else {
+                        clearInterval(playTimer);
+                        isPlaying = false;
+                        playButton.textContent = "▶ Play";
+                    }
+                }, 1500);
+            } else {
+                clearInterval(playTimer);
+                playButton.textContent = "▶ Play";
+            }
+        }
+
+        // Event Listeners
+        playButton.addEventListener('click', playVisualization);
+
+        prevButton.addEventListener('click', () => {
+            if (currentStep > 0) {
+                currentStep--;
+                updateVisualization();
+            }
+        });
+
+        nextButton.addEventListener('click', () => {
+            if (currentStep < executionSteps.length - 1) {
+                currentStep++;
+                updateVisualization();
+            }
+        });
+
+        resetButton.addEventListener('click', () => {
+            clearInterval(playTimer);
+            currentStep = 0;
+            isPlaying = false;
+            playButton.textContent = "▶ Play";
+            updateVisualization();
+        }); sortingTabButton.addEventListener('click', () => {
+            activeApproach = 'sorting';
+            sortingTabButton.classList.add('active');
+            countingTabButton.classList.remove('active');
+            primeTabButton.classList.remove('active');
+            clearInterval(playTimer);
+            initVisualization();
+        });
+
+        countingTabButton.addEventListener('click', () => {
+            activeApproach = 'counting';
+            countingTabButton.classList.add('active');
+            sortingTabButton.classList.remove('active');
+            primeTabButton.classList.remove('active');
+            clearInterval(playTimer);
+            initVisualization();
+        });
+
+        primeTabButton.addEventListener('click', () => {
+            activeApproach = 'prime';
+            primeTabButton.classList.add('active');
+            sortingTabButton.classList.remove('active');
+            countingTabButton.classList.remove('active');
+            clearInterval(playTimer);
+            initVisualization();
+        });
+
+        // Initialize visualization
+        initVisualization();
+    </script>
+</body>
+
+</html>

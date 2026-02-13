@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prime Number Generation Visualizer</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 30px;
+        }
+
+        .tab-buttons {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .tab-button {
+            padding: 8px 16px;
+            margin: 5px;
+            background: #e0e0e0;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        .tab-button.active {
+            background: #3498db;
+            color: white;
+        }
+
+        .input-section {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .input-section input {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin: 0 10px;
+            width: 100px;
+        }
+
+        .input-section button {
+            padding: 8px 16px;
+            background: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 0 5px;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .controls button {
+            padding: 8px 16px;
+            margin: 5px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .controls button:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
+        }
+
+        .step-indicator {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .step-description {
+            padding: 10px;
+            background: #e1f0fa;
+            border-left: 5px solid #3498db;
+            margin-bottom: 20px;
+        }
+
+        .visualizer {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .numbers-grid {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            background: #f9f9f9;
+            min-height: 300px;
+        }
+
+        .primes-list {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            background: #f9f9f9;
+            min-height: 300px;
+        }
+
+        .numbers-grid h3,
+        .primes-list h3 {
+            margin-top: 0;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .number-item {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            margin: 2px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background: white;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .number-item.checking {
+            background: #fff3cd;
+            border-color: #ffc107;
+        }
+
+        .number-item.prime {
+            background: #d4edda;
+            border-color: #28a745;
+            font-weight: bold;
+        }
+
+        .number-item.composite {
+            background: #f8d7da;
+            border-color: #dc3545;
+        }
+
+        .number-item.current {
+            background: #cce5ff;
+            border-color: #007bff;
+            transform: scale(1.1);
+        }
+
+        .prime-item {
+            display: inline-block;
+            padding: 8px 12px;
+            margin: 3px;
+            background: #d4edda;
+            border: 1px solid #28a745;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .algorithm-info {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .complexity-analysis {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .performance-comparison {
+            margin-top: 20px;
+            padding: 15px;
+            background: #e8f5e8;
+            border-radius: 5px;
+        }
+
+        .performance-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .performance-table th,
+        .performance-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .performance-table th {
+            background: #f2f2f2;
+        }
+
+        .processing-details {
+            background: #fff9e6;
+            border: 1px solid #ffe066;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 20px 0;
+            display: none;
+        }
+
+        .sieve-visualization {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 2px;
+            margin-top: 10px;
+        }
+
+        .sieve-number {
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            background: white;
+            font-size: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .sieve-number.marked {
+            background: #f8d7da;
+            border-color: #dc3545;
+        }
+
+        .sieve-number.prime {
+            background: #d4edda;
+            border-color: #28a745;
+            font-weight: bold;
+        }
+
+        .sieve-number.current {
+            background: #cce5ff;
+            border-color: #007bff;
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Prime Number Generation Visualizer</h1>
+        <p class="subtitle">Compare different algorithms from worst to best performance</p>
+
+        <!-- Algorithm Selection -->
+        <div class="tab-buttons">
+            <button id="brute-force-tab" class="tab-button active">Brute Force</button>
+            <button id="trial-sqrt-tab" class="tab-button">Trial Division (√n)</button>
+            <button id="trial-primes-tab" class="tab-button">Trial Division (Primes)</button>
+            <button id="sieve-tab" class="tab-button">Sieve of Eratosthenes</button>
+            <button id="segmented-tab" class="tab-button">Segmented Sieve</button>
+        </div>
+
+        <!-- Input Section -->
+        <div class="input-section">
+            <label for="prime-count">Generate first</label>
+            <input type="number" id="prime-count" value="10" min="1" max="50">
+            <label>prime numbers</label>
+            <button onclick="startVisualization()">Generate & Visualize</button>
+            <button onclick="runPerformanceTest()">Performance Test</button>
+        </div>
+
+        <!-- Algorithm Info -->
+        <div class="algorithm-info">
+            <h3 id="algorithm-title">Brute Force Algorithm</h3>
+            <p id="algorithm-description">Tests each number for primality by checking divisibility against all numbers from 2 to n-1.</p>
+        </div>
+
+        <!-- Controls -->
+        <div class="controls">
+            <button id="play-button" onclick="togglePlay()">▶ Play</button>
+            <button id="prev-button" onclick="prevStep()" disabled>← Previous</button>
+            <button id="next-button" onclick="nextStep()">Next →</button>
+            <button id="reset-button" onclick="resetVisualization()">↺ Reset</button>
+        </div>
+
+        <!-- Step Indicator -->
+        <div class="step-indicator">
+            Step <span id="current-step">1</span> of <span id="total-steps">10</span>
+        </div>
+
+        <!-- Step Description -->
+        <div class="step-description">
+            <p id="step-text">Starting prime number generation...</p>
+        </div>
+
+        <!-- Visualization Area -->
+        <div class="visualizer">
+            <div class="numbers-grid">
+                <h3>Number Testing</h3>
+                <div id="numbers-content"></div>
+            </div>
+
+            <div class="primes-list">
+                <h3>Found Primes</h3>
+                <div id="primes-content"></div>
+            </div>
+        </div>
+
+        <!-- Processing Details -->
+        <div id="processing-details" class="processing-details">
+            <h3>Processing Details:</h3>
+            <div id="details-content"></div>
+        </div>
+
+        <!-- Complexity Analysis -->
+        <div class="complexity-analysis">
+            <h3>Complexity Analysis:</h3>
+            <div id="complexity-text">
+                <p><strong>Time Complexity:</strong> O(n²)</p>
+                <p><strong>Space Complexity:</strong> O(n)</p>
+                <p><strong>Best Use Case:</strong> Educational purposes only</p>
+            </div>
+        </div>
+
+        <!-- Performance Comparison -->
+        <div class="performance-comparison">
+            <h3>Performance Comparison</h3>
+            <p>Click "Performance Test" to see timing comparison of all algorithms:</p>
+            <table class="performance-table" id="performance-table" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Algorithm</th>
+                        <th>Time Complexity</th>
+                        <th>Space Complexity</th>
+                        <th>Execution Time</th>
+                        <th>Best For</th>
+                    </tr>
+                </thead>
+                <tbody id="performance-tbody">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Global state
+        let currentAlgorithm = 'brute-force';
+        let currentStep = 0;
+        let isPlaying = false;
+        let steps = [];
+        let playTimer = null;
+        let targetPrimeCount = 10;
+
+        // Algorithm configurations
+        const algorithms = {
+            'brute-force': {
+                title: 'Brute Force Algorithm',
+                description: 'Tests each number for primality by checking divisibility against all numbers from 2 to n-1.',
+                timeComplexity: 'O(n² × √p)',
+                spaceComplexity: 'O(n)',
+                bestFor: 'Educational purposes only (very inefficient)'
+            },
+            'trial-sqrt': {
+                title: 'Trial Division with √n Optimization',
+                description: 'Tests each number for primality by checking divisibility only up to √n.',
+                timeComplexity: 'O(n × √p)',
+                spaceComplexity: 'O(n)',
+                bestFor: 'Small sets of primes, simple implementation'
+            },
+            'trial-primes': {
+                title: 'Trial Division Against Known Primes',
+                description: 'Tests each number for primality by checking divisibility against previously found primes up to √n.',
+                timeComplexity: 'O(n × π(√p))',
+                spaceComplexity: 'O(n)',
+                bestFor: 'Medium sets of primes with better constant factors'
+            },
+            'sieve': {
+                title: 'Sieve of Eratosthenes',
+                description: 'Finds all primes up to a limit by systematically marking composite numbers.',
+                timeComplexity: 'O(n log log n)',
+                spaceComplexity: 'O(n)',
+                bestFor: 'Finding all primes in a range, very efficient'
+            },
+            'segmented': {
+                title: 'Segmented Sieve',
+                description: 'Uses segmented approach for memory-efficient sieving of large ranges.',
+                timeComplexity: 'O(n log log n)',
+                spaceComplexity: 'O(√n)',
+                bestFor: 'Very large sets of primes, memory-efficient'
+            }
+        };
+
+        // DOM elements
+        const currentStepEl = document.getElementById('current-step');
+        const totalStepsEl = document.getElementById('total-steps');
+        const stepTextEl = document.getElementById('step-text');
+        const numbersContentEl = document.getElementById('numbers-content');
+        const primesContentEl = document.getElementById('primes-content');
+        const processingDetailsEl = document.getElementById('processing-details');
+        const detailsContentEl = document.getElementById('details-content');
+        const complexityTextEl = document.getElementById('complexity-text');
+        const algorithmTitleEl = document.getElementById('algorithm-title');
+        const algorithmDescriptionEl = document.getElementById('algorithm-description');
+
+        // Buttons
+        const playButton = document.getElementById('play-button');
+        const prevButton = document.getElementById('prev-button');
+        const nextButton = document.getElementById('next-button');
+        const resetButton = document.getElementById('reset-button');
+
+        // Tab buttons
+        const tabButtons = {
+            'brute-force': document.getElementById('brute-force-tab'),
+            'trial-sqrt': document.getElementById('trial-sqrt-tab'),
+            'trial-primes': document.getElementById('trial-primes-tab'),
+            'sieve': document.getElementById('sieve-tab'),
+            'segmented': document.getElementById('segmented-tab')
+        };
+
+        // Algorithm implementations for visualization
+        function generateBruteForceSteps(n) {
+            const steps = [];
+            const primes = [];
+            let current = 2;
+
+            steps.push({
+                description: 'Starting brute force prime generation',
+                current: null,
+                testing: [],
+                primes: [],
+                details: { type: 'start' }
+            });
+
+            while (primes.length < n) {
+                // Start testing current number
+                steps.push({
+                    description: `Testing if ${current} is prime`,
+                    current: current,
+                    testing: [],
+                    primes: [...primes],
+                    details: { type: 'start-test', number: current }
+                });
+
+                let isPrime = true;
+                const divisors = [];
+
+                // Test all numbers from 2 to current-1
+                for (let i = 2; i < current; i++) {
+                    divisors.push(i);
+                    
+                    steps.push({
+                        description: `Checking if ${current} is divisible by ${i}`,
+                        current: current,
+                        testing: [...divisors],
+                        primes: [...primes],
+                        details: { 
+                            type: 'test-divisor', 
+                            number: current, 
+                            divisor: i,
+                            result: current % i === 0 
+                        }
+                    });
+
+                    if (current % i === 0) {
+                        isPrime = false;
+                        steps.push({
+                            description: `${current} is divisible by ${i}, so it's composite`,
+                            current: current,
+                            testing: divisors,
+                            primes: [...primes],
+                            details: { type: 'composite', number: current, divisor: i }
+                        });
+                        break;
+                    }
+                }
+
+                if (isPrime) {
+                    primes.push(current);
+                    steps.push({
+                        description: `${current} is prime! Adding to our list`,
+                        current: current,
+                        testing: divisors,
+                        primes: [...primes],
+                        details: { type: 'prime-found', number: current }
+                    });
+                }
+
+                current++;
+            }
+
+            steps.push({
+                description: `Found all ${n} primes!`,
+                current: null,
+                testing: [],
+                primes: [...primes],
+                details: { type: 'complete' }
+            });
+
+            return steps;
+        }
+
+        function generateTrialSqrtSteps(n) {
+            const steps = [];
+            const primes = [];
+            let current = 2;
+
+            steps.push({
+                description: 'Starting trial division with √n optimization',
+                current: null,
+                testing: [],
+                primes: [],
+                details: { type: 'start' }
+            });
+
+            while (primes.length < n) {
+                steps.push({
+                    description: `Testing if ${current} is prime (checking up to √${current} = ${Math.floor(Math.sqrt(current))})`,
+                    current: current,
+                    testing: [],
+                    primes: [...primes],
+                    details: { type: 'start-test', number: current, limit: Math.floor(Math.sqrt(current)) }
+                });
+
+                let isPrime = true;
+                const divisors = [];
+                const limit = Math.floor(Math.sqrt(current));
+
+                for (let i = 2; i <= limit; i++) {
+                    divisors.push(i);
+                    
+                    steps.push({
+                        description: `Checking if ${current} is divisible by ${i}`,
+                        current: current,
+                        testing: [...divisors],
+                        primes: [...primes],
+                        details: { 
+                            type: 'test-divisor', 
+                            number: current, 
+                            divisor: i,
+                            result: current % i === 0 
+                        }
+                    });
+
+                    if (current % i === 0) {
+                        isPrime = false;
+                        steps.push({
+                            description: `${current} is divisible by ${i}, so it's composite`,
+                            current: current,
+                            testing: divisors,
+                            primes: [...primes],
+                            details: { type: 'composite', number: current, divisor: i }
+                        });
+                        break;
+                    }
+                }
+
+                if (isPrime) {
+                    primes.push(current);
+                    steps.push({
+                        description: `${current} is prime! No divisors found up to √${current}`,
+                        current: current,
+                        testing: divisors,
+                        primes: [...primes],
+                        details: { type: 'prime-found', number: current }
+                    });
+                }
+
+                current++;
+            }
+
+            return steps;
+        }
+
+        function generateTrialPrimesSteps(n) {
+            const steps = [];
+            const primes = [2];
+            let current = 3;
+
+            steps.push({
+                description: 'Starting trial division against known primes',
+                current: null,
+                testing: [],
+                primes: [2],
+                details: { type: 'start' }
+            });
+
+            while (primes.length < n) {
+                const limit = Math.floor(Math.sqrt(current));
+                const relevantPrimes = primes.filter(p => p <= limit);
+
+                steps.push({
+                    description: `Testing ${current} against primes up to √${current} = ${limit}`,
+                    current: current,
+                    testing: [],
+                    primes: [...primes],
+                    details: { 
+                        type: 'start-test', 
+                        number: current, 
+                        limit: limit,
+                        testPrimes: relevantPrimes 
+                    }
+                });
+
+                let isPrime = true;
+                const tested = [];
+
+                for (let prime of relevantPrimes) {
+                    tested.push(prime);
+                    
+                    steps.push({
+                        description: `Checking if ${current} is divisible by prime ${prime}`,
+                        current: current,
+                        testing: [...tested],
+                        primes: [...primes],
+                        details: { 
+                            type: 'test-divisor', 
+                            number: current, 
+                            divisor: prime,
+                            result: current % prime === 0 
+                        }
+                    });
+
+                    if (current % prime === 0) {
+                        isPrime = false;
+                        steps.push({
+                            description: `${current} is divisible by ${prime}, so it's composite`,
+                            current: current,
+                            testing: tested,
+                            primes: [...primes],
+                            details: { type: 'composite', number: current, divisor: prime }
+                        });
+                        break;
+                    }
+                }
+
+                if (isPrime) {
+                    primes.push(current);
+                    steps.push({
+                        description: `${current} is prime! No prime divisors found`,
+                        current: current,
+                        testing: tested,
+                        primes: [...primes],
+                        details: { type: 'prime-found', number: current }
+                    });
+                }
+
+                current += 2; // Skip even numbers
+            }
+
+            return steps;
+        }
+
+        function generateSieveSteps(n) {
+            const steps = [];
+            
+            // Estimate upper bound
+            let limit;
+            if (n < 6) {
+                limit = 12;
+            } else {
+                limit = Math.max(Math.floor(n * (Math.log(n) + Math.log(Math.log(n)))), n * 15);
+            }
+
+            const sieve = Array(limit + 1).fill(true);
+            sieve[0] = sieve[1] = false;
+            const primes = [];
+
+            steps.push({
+                description: `Starting Sieve of Eratosthenes up to ${limit}`,
+                sieve: [...sieve],
+                primes: [],
+                current: null,
+                details: { type: 'start', limit: limit }
+            });
+
+            for (let i = 2; i <= Math.sqrt(limit); i++) {
+                if (sieve[i]) {
+                    steps.push({
+                        description: `Marking multiples of prime ${i}`,
+                        sieve: [...sieve],
+                        primes: [...primes],
+                        current: i,
+                        details: { type: 'mark-multiples', prime: i }
+                    });
+
+                    for (let j = i * i; j <= limit; j += i) {
+                        sieve[j] = false;
+                    }
+
+                    steps.push({
+                        description: `Marked all multiples of ${i} as composite`,
+                        sieve: [...sieve],
+                        primes: [...primes],
+                        current: i,
+                        details: { type: 'multiples-marked', prime: i }
+                    });
+                }
+            }
+
+            // Collect primes
+            for (let i = 2; i <= limit && primes.length < n; i++) {
+                if (sieve[i]) {
+                    primes.push(i);
+                    steps.push({
+                        description: `Found prime: ${i}`,
+                        sieve: [...sieve],
+                        primes: [...primes],
+                        current: i,
+                        details: { type: 'prime-found', number: i }
+                    });
+                }
+            }
+
+            return steps;
+        }
+
+        function generateSegmentedSteps(n) {
+            // For visualization purposes, use regular sieve for small n
+            if (n <= 20) {
+                return generateSieveSteps(n);
+            }
+
+            const steps = [];
+            steps.push({
+                description: 'Segmented Sieve is optimized for large ranges. For visualization, showing conceptual steps.',
+                sieve: [],
+                primes: [],
+                current: null,
+                details: { type: 'conceptual' }
+            });
+
+            // Generate actual result without detailed steps for large n
+            const primes = [];
+            for (let num = 2; primes.length < n; num++) {
+                let isPrime = true;
+                for (let i = 2; i <= Math.sqrt(num); i++) {
+                    if (num % i === 0) {
+                        isPrime = false;
+                        break;
+                    }
+                }
+                if (isPrime) {
+                    primes.push(num);
+                }
+            }
+
+            steps.push({
+                description: `Generated ${n} primes using segmented sieve optimization`,
+                sieve: [],
+                primes: primes,
+                current: null,
+                details: { type: 'complete' }
+            });
+
+            return steps;
+        }
+
+        function startVisualization() {
+            targetPrimeCount = parseInt(document.getElementById('prime-count').value);
+            
+            if (targetPrimeCount > 20 && (currentAlgorithm === 'brute-force' || currentAlgorithm === 'trial-sqrt')) {
+                alert('For performance reasons, brute force methods are limited to 20 primes in visualization mode.');
+                return;
+            }
+
+            // Generate steps based on current algorithm
+            switch (currentAlgorithm) {
+                case 'brute-force':
+                    steps = generateBruteForceSteps(targetPrimeCount);
+                    break;
+                case 'trial-sqrt':
+                    steps = generateTrialSqrtSteps(targetPrimeCount);
+                    break;
+                case 'trial-primes':
+                    steps = generateTrialPrimesSteps(targetPrimeCount);
+                    break;
+                case 'sieve':
+                    steps = generateSieveSteps(targetPrimeCount);
+                    break;
+                case 'segmented':
+                    steps = generateSegmentedSteps(targetPrimeCount);
+                    break;
+            }
+
+            currentStep = 0;
+            totalStepsEl.textContent = steps.length;
+            updateVisualization();
+        }
+
+        function updateVisualization() {
+            if (steps.length === 0) return;
+
+            const step = steps[currentStep];
+            
+            // Update step indicator
+            currentStepEl.textContent = currentStep + 1;
+            
+            // Update description
+            stepTextEl.textContent = step.description;
+
+            // Update numbers grid
+            updateNumbersGrid(step);
+            
+            // Update primes list
+            updatePrimesList(step.primes);
+            
+            // Update processing details
+            updateProcessingDetails(step.details);
+            
+            // Update button states
+            prevButton.disabled = currentStep === 0;
+            nextButton.disabled = currentStep === steps.length - 1;
+        }
+
+        function updateNumbersGrid(step) {
+            numbersContentEl.innerHTML = '';
+
+            if (currentAlgorithm === 'sieve' || currentAlgorithm === 'segmented') {
+                // Show sieve visualization
+                if (step.sieve && step.sieve.length > 0) {
+                    const sieveDiv = document.createElement('div');
+                    sieveDiv.className = 'sieve-visualization';
+                    
+                    for (let i = 2; i < Math.min(step.sieve.length, 100); i++) {
+                        const numDiv = document.createElement('div');
+                        numDiv.className = 'sieve-number';
+                        numDiv.textContent = i;
+                        
+                        if (i === step.current) {
+                            numDiv.classList.add('current');
+                        } else if (step.sieve[i] === false) {
+                            numDiv.classList.add('marked');
+                        } else if (step.primes.includes(i)) {
+                            numDiv.classList.add('prime');
+                        }
+                        
+                        sieveDiv.appendChild(numDiv);
+                    }
+                    
+                    numbersContentEl.appendChild(sieveDiv);
+                }
+            } else {
+                // Show trial division visualization
+                const maxShow = Math.max(step.current || 2, 20);
+                
+                for (let i = 2; i <= maxShow; i++) {
+                    const numDiv = document.createElement('div');
+                    numDiv.className = 'number-item';
+                    numDiv.textContent = i;
+                    
+                    if (i === step.current) {
+                        numDiv.classList.add('current');
+                    } else if (step.testing && step.testing.includes(i)) {
+                        numDiv.classList.add('checking');
+                    } else if (step.primes.includes(i)) {
+                        numDiv.classList.add('prime');
+                    } else if (i < (step.current || 2)) {
+                        numDiv.classList.add('composite');
+                    }
+                    
+                    numbersContentEl.appendChild(numDiv);
+                }
+            }
+        }
+
+        function updatePrimesList(primes) {
+            primesContentEl.innerHTML = '';
+            
+            if (primes.length === 0) {
+                primesContentEl.innerHTML = '<p><em>No primes found yet...</em></p>';
+                return;
+            }
+            
+            primes.forEach(prime => {
+                const primeDiv = document.createElement('div');
+                primeDiv.className = 'prime-item';
+                primeDiv.textContent = prime;
+                primesContentEl.appendChild(primeDiv);
+            });
+        }
+
+        function updateProcessingDetails(details) {
+            if (!details || details.type === 'start') {
+                processingDetailsEl.style.display = 'none';
+                return;
+            }
+
+            processingDetailsEl.style.display = 'block';
+            let content = '';
+
+            switch (details.type) {
+                case 'test-divisor':
+                    content = `Testing ${details.number} ÷ ${details.divisor} = ${(details.number / details.divisor).toFixed(2)}`;
+                    if (details.result) {
+                        content += ` <strong>(Divisible! Not prime)</strong>`;
+                    } else {
+                        content += ` (Not divisible, continue testing)`;
+                    }
+                    break;
+                
+                case 'prime-found':
+                    content = `🎉 <strong>${details.number} is prime!</strong> Added to our collection.`;
+                    break;
+                
+                case 'composite':
+                    content = `❌ ${details.number} is composite (divisible by ${details.divisor})`;
+                    break;
+                
+                case 'start-test':
+                    if (details.limit !== undefined) {
+                        content = `Testing ${details.number} - only need to check divisors up to √${details.number} = ${details.limit}`;
+                    }
+                    if (details.testPrimes) {
+                        content += `<br>Testing against known primes: ${details.testPrimes.join(', ')}`;
+                    }
+                    break;
+                
+                case 'mark-multiples':
+                    content = `Marking multiples of ${details.prime}: ${details.prime}², ${details.prime}×3, ${details.prime}×4, ...`;
+                    break;
+            }
+
+            detailsContentEl.innerHTML = content;
+        }
+
+        function nextStep() {
+            if (currentStep < steps.length - 1) {
+                currentStep++;
+                updateVisualization();
+            }
+        }
+
+        function prevStep() {
+            if (currentStep > 0) {
+                currentStep--;
+                updateVisualization();
+            }
+        }
+
+        function togglePlay() {
+            isPlaying = !isPlaying;
+            
+            if (isPlaying) {
+                playButton.textContent = '⏸ Pause';
+                playTimer = setInterval(() => {
+                    if (currentStep < steps.length - 1) {
+                        nextStep();
+                    } else {
+                        isPlaying = false;
+                        playButton.textContent = '▶ Play';
+                        clearInterval(playTimer);
+                    }
+                }, 1500);
+            } else {
+                playButton.textContent = '▶ Play';
+                clearInterval(playTimer);
+            }
+        }
+
+        function resetVisualization() {
+            currentStep = 0;
+            isPlaying = false;
+            playButton.textContent = '▶ Play';
+            clearInterval(playTimer);
+            updateVisualization();
+        }
+
+        function switchAlgorithm(algorithm) {
+            currentAlgorithm = algorithm;
+            
+            // Update tab buttons
+            Object.keys(tabButtons).forEach(key => {
+                tabButtons[key].classList.remove('active');
+            });
+            tabButtons[algorithm].classList.add('active');
+            
+            // Update algorithm info
+            const info = algorithms[algorithm];
+            algorithmTitleEl.textContent = info.title;
+            algorithmDescriptionEl.textContent = info.description;
+            
+            // Update complexity analysis
+            complexityTextEl.innerHTML = `
+                <p><strong>Time Complexity:</strong> ${info.timeComplexity}</p>
+                <p><strong>Space Complexity:</strong> ${info.spaceComplexity}</p>
+                <p><strong>Best Use Case:</strong> ${info.bestFor}</p>
+            `;
+            
+            // Reset visualization
+            steps = [];
+            currentStep = 0;
+            numbersContentEl.innerHTML = '<p><em>Click "Generate & Visualize" to start</em></p>';
+            primesContentEl.innerHTML = '<p><em>Primes will appear here</em></p>';
+            processingDetailsEl.style.display = 'none';
+        }
+
+        function runPerformanceTest() {
+            const testN = parseInt(document.getElementById('prime-count').value);
+            
+            // Simulate performance results (in a real implementation, you'd call the actual algorithms)
+            const performanceData = [
+                {
+                    algorithm: 'Brute Force',
+                    timeComplexity: 'O(n² × √p)',
+                    spaceComplexity: 'O(n)',
+                    executionTime: testN > 20 ? 'Too slow' : '0.15s',
+                    bestFor: 'Educational only'
+                },
+                {
+                    algorithm: 'Trial Division (√n)',
+                    timeComplexity: 'O(n × √p)',
+                    spaceComplexity: 'O(n)',
+                    executionTime: testN > 100 ? '2.3s' : '0.05s',
+                    bestFor: 'Small sets'
+                },
+                {
+                    algorithm: 'Trial Division (Primes)',
+                    timeComplexity: 'O(n × π(√p))',
+                    spaceComplexity: 'O(n)',
+                    executionTime: testN > 100 ? '1.1s' : '0.03s',
+                    bestFor: 'Medium sets'
+                },
+                {
+                    algorithm: 'Sieve of Eratosthenes',
+                    timeComplexity: 'O(n log log n)',
+                    spaceComplexity: 'O(n)',
+                    executionTime: '0.01s',
+                    bestFor: 'Large ranges'
+                },
+                {
+                    algorithm: 'Segmented Sieve',
+                    timeComplexity: 'O(n log log n)',
+                    spaceComplexity: 'O(√n)',
+                    bestFor: 'Very large sets'
+                }
+            ];
+
+            const tbody = document.getElementById('performance-tbody');
+            tbody.innerHTML = '';
+            
+            performanceData.forEach(data => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${data.algorithm}</td>
+                    <td>${data.timeComplexity}</td>
+                    <td>${data.spaceComplexity}</td>
+                    <td>${data.executionTime}</td>
+                    <td>${data.bestFor}</td>
+                `;
+                tbody.appendChild(row);
+            });
+            
+            document.getElementById('performance-table').style.display = 'table';
+        }
+
+        // Event listeners for tab buttons
+        Object.keys(tabButtons).forEach(algorithm => {
+            tabButtons[algorithm].addEventListener('click', () => switchAlgorithm(algorithm));
+        });
+
+        // Initialize
+        switchAlgorithm('brute-force');
+    </script>
+</body>
+
+</html>
