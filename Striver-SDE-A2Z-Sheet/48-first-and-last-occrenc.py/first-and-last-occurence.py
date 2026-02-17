@@ -8,7 +8,6 @@ class Solution:
         # I have to find the first and the last occurence of the elements right
         def getFirstOccurence() -> int:
 
-
             left = 0
             right = n-1
             answer = -1
