@@ -1,4 +1,4 @@
-def aggressiveCows(stalls, k):
+def aggressiveCows(stalls, k) -> float:
     # Write your code here.
 
     stalls.sort()
@@ -21,7 +21,7 @@ def aggressiveCows(stalls, k):
         for i in range(1, len(stalls)):
             if(stalls[i] - prev_cow >= mid):
                 remCows -= 1
-                localAnswer = min(localAnswer, stalls[i] - prev_cow)
+                localAnswer: float = min(localAnswer, stalls[i] - prev_cow)
                 prev_cow = stalls[i]
             
             if(remCows == 0):
@@ -29,7 +29,7 @@ def aggressiveCows(stalls, k):
         
         if(remCows == 0):
             left = mid + 1
-            answer = max(answer, localAnswer)
+            answer: float = max(answer, localAnswer)
         else:
             right = mid - 1
         
